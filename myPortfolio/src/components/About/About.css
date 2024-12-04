@@ -1,0 +1,51 @@
+.about {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100dvh;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    text-align: center;
+    gap: 50px;
+}
+
+.profile {
+    max-width: 250px;
+    max-height: 250px;
+    border-radius: 50%;
+}
+
+.text {
+    max-width: 500px;
+
+    h1 {
+        text-align: left;
+    }
+
+    h2 {
+        text-align: left;
+    }
+}
+
+.description {
+    text-align: justify;
+}
+
+
+@media (width <= 800px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        gap: 20px;
+
+        .profile {
+            max-width: 300px;
+            max-height: 300px;
+        }
+    }
+}
