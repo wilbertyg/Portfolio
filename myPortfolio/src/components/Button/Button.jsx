@@ -1,9 +1,10 @@
 import './Button.css'
 
-function Button({text}) {
+function Button({text, enabled=true}) {
+    const status = enabled ? 'enabled' : 'disabled';
     return (
         <div>
-            <button className="button">{text}</button>
+            <button className={`button ${status}`}>{text}</button>
         </div>
     )
 }

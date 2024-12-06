@@ -2,7 +2,13 @@ import './Navbar.css'
 
 function Navbar() {
     return (
-        <div>Navbar</div>
+        <nav className="navbar">
+            <div className="navbar-container">
+                <a href="#about" className='navbar-element'>About</a>
+                <a href="#skills" className='navbar-element'>Skills</a>
+                <a href="#projects" className='navbar-element'>Projects</a>
+            </div>
+        </nav>
     )
 }
 

@@ -1,15 +1,25 @@
 .button {
-    background-color: #24a0ed;
-    color: white;
     border: none;
     padding: 15px 25px;
     border-radius: 10px;
-    cursor: pointer;
     font-size: 16px;
     font-weight: bold;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.button:hover {
+.enabled {
+    cursor: pointer;
+    background-color: #24a0ed;
+    color: white;
+}
+
+.disabled {
+    background-color: #aaa;
+    color: #ddd;
+}
+
+.enabled:hover {
     background-color: #1b8ac2;
-    transition: background-color 0.4s;
+    transition:  0.3s;
+    color: #ddd;
 }

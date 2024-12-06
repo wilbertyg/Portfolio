@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: center;
     height: 100dvh;
+    padding: 30px;
 }
 
 .container {
@@ -10,29 +11,35 @@
     justify-content: center;
     flex-direction: row;
     text-align: center;
-    gap: 50px;
+    gap: 80px;
+    padding: 20px;
 }
 
 .profile {
     max-width: 250px;
     max-height: 250px;
     border-radius: 50%;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 .text {
-    max-width: 500px;
-
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    gap: 20px;
     h1 {
         text-align: left;
+        font-size: 36px;
     }
-
     h2 {
+        font-size: 28px;
         text-align: left;
     }
 }
 
 .description {
     text-align: justify;
+    font-size: 20px;
 }
 
 
