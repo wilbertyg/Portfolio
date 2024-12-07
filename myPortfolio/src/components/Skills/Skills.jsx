@@ -1,4 +1,7 @@
 import './Skills.css'
+import {SkillList} from './SkillList'
+import Skill from './Skill'
+
 
 function Skills() {
     return (
@@ -8,8 +11,12 @@ function Skills() {
                 <div className='skills-container'>
                     <div className='skill'>
                         <h2>Programming Languages</h2>
-                        <span>
-                        
+                        <span className='list'>
+                            {
+                                SkillList.map((skills,) => {
+                                    return Skill(skills)
+                                })
+                            }
                         </span>
                     </div>
                     <div className='skill'>

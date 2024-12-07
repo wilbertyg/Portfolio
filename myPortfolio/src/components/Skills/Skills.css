@@ -1,0 +1,23 @@
+
+
+.list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+}
+
+.box:hover {
+    scale: 1.1;
+    transition: scale 0.2s ease-in-out;
+}  
+.box{
+    scale: 1;
+    transition: scale 0.2s ease-in-out;
+}
+
+.skills {
+    padding: 0 3rem;
+}
