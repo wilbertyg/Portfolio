@@ -1,37 +1,56 @@
 import './Skills.css'
-import {SkillList} from './SkillList'
+import {Programming, Frameworks, Tools, softSkills} from './SkillList'
 import Skill from './Skill'
 
 
 function Skills() {
     return (
-        <div>
-            <section className='skills'>
-                <h1>Hard Skills</h1>
+        <div className='skills'>
+            <section className='container'>
+                <h1>SKILLS</h1>
                 <div className='skills-container'>
                     <div className='skill'>
-                        <h2>Programming Languages</h2>
+                        <h3>Programming Languages</h3>
                         <span className='list'>
                             {
-                                SkillList.map((skills,) => {
-                                    return Skill(skills)
+                                Programming.map((skills, index) => {
+                                    return <Skill key={index} index={index} {...skills} />
                                 })
                             }
                         </span>
                     </div>
                     <div className='skill'>
-                        <h2>Frameworks</h2>
-                        <span>
-
+                        <h3>Frameworks and Libraries</h3>
+                        <span className='list'>
+                            {
+                                Frameworks.map((skills, index) => {
+                                    return <Skill key={index} index={index} {...skills} />
+                                })
+                            }
                         </span>
                     </div>
                     <div className='skill'>
-                        <h2>Tools</h2>
-                        <span>
-                            
+                        <h3>Tools</h3>
+                        <span className='list'>
+                            {
+                                Tools.map((skills, index) => {
+                                    return <Skill key={index} index={index} {...skills} />
+                                })
+                            }
+                        </span>
+                    </div>
+                    <div className='skill'>
+                        <h3>Soft Skills</h3>
+                    <span className='list'>
+                            {
+                                softSkills.map((skills, index) => {
+                                    return <Skill key={index} index={index} {...skills} />
+                                })
+                            }
                         </span>
                     </div>
                 </div>
+        
             </section>
         </div>
     )
