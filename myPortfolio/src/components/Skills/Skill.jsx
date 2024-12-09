@@ -10,7 +10,7 @@ function Skill(props) {
     } else {
         return (
             <div className="box">
-                <h3>{props.skill}</h3>
+                <p><i>{props.skill}</i></p>
             </div>
         );
     }

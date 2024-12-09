@@ -2,18 +2,20 @@ import './About.css'
 import Profile from '../../assets/Profile.jpg'
 import Button from '../Button/Button'
 import CV from '../../assets/CV - Wilbert Yang.pdf'
+import Socials from '../Socials'
 
 function About() {
     return (
-        <div className='about'>
-            <section className='container'>
-                <div className='image-container'>
-                    <img src={Profile} className='profile' alt='profile' />
+        <div className='about' id='about'>
+            <section className='about-container'>
+                <div className='about-image-container'>
+                    <img src={Profile} className='about-profile' alt='profile' />
                 </div>
-                <div className='text'>
+                <div className='about-text'>
                     <h1>WILBERT YANG</h1>
+                    <Socials />
                     <h2>Data Scientist</h2>
-                    <p className='description'>
+                    <p className='about-description'>
                         I am an undergraduate Computer Science student, specializing in Artificial Intelligence field. An enthusiastic individual who is committed in creating a meaningful impact while learning and collaborating with diverse teams to deliver innovative solutions in the field.
                     </p>
                     <a href={CV} download>

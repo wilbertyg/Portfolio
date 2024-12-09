@@ -1,9 +1,20 @@
 .projects {
+    padding: 80px 40px 40px 40px;
     display: flex;
     flex-direction: column;
     min-height: 100dvh;
 }
 
-.container {
+.projects-containers {
     display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.projects-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px;
 }

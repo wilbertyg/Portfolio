@@ -1,0 +1,20 @@
+.related {
+    padding: 80px 40px 40px 40px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+}
+
+.related-containers {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.related-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px;
+}

@@ -1,6 +1,6 @@
 
 .skills {
-    padding: 40px;
+    padding: 80px 40px 40px 40px;
     display: flex;
     flex-direction: column;
     min-height: 100dvh;
