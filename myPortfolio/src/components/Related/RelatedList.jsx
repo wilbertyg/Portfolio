@@ -1,3 +1,8 @@
+import competitiveProgramming from '../../assets/TECHFEST_Wilbert Yang_First Place.png';
+import NVIDIATransformer from '../../assets/NVIDIA_DLI_Transformer_Certificate_Wilbert.png';
+import NVIDIADeepLearning from '../../assets/NVIDIA_DLI_FDL.png';
+import AlgorithmBootcamp from '../../assets/Algorithm Bootcamp_Wilbert Yang.png';
+
 export const RelatedList = [
     {
         title: 'Education and Development Activist @BINUS DSC 2023 - 2024',
@@ -7,17 +12,17 @@ export const RelatedList = [
     {
         title: 'First Placed Team in TECHFEST 2024 Competitive Programming',
         description: '',
-        image: 'https://media.licdn.com/dms/image/v2/D562DAQGBpg0nXLAK6A/profile-treasury-image-shrink_800_800/profile-treasury-image-shrink_800_800/0/1728273404309?e=1734372000&v=beta&t=49p1Bp6aLgTNXowoEguQvm5Ui8hoZ5f3qVYUitAUZ9s',
+        image: competitiveProgramming,
     },
     {
         title: 'Building Transformer-Based Natural Language Processing Applications',
         description: '',
-        image: 'https://media.licdn.com/dms/image/v2/D562DAQGxLwp-tTcSHQ/profile-treasury-image-shrink_800_800/profile-treasury-image-shrink_800_800/0/1729041506963?e=1734372000&v=beta&t=Ua0XsN_9nd9q1rFrQwKsiVCCJ-7oD0XYzjA_jeoBji4',
+        image: NVIDIATransformer,
     },
     {
         title: 'Fundamentals of Deep Learning',
         description: '',
-        image: 'https://media.licdn.com/dms/image/v2/D562DAQEHXJlkfXWF_Q/profile-treasury-image-shrink_800_800/profile-treasury-image-shrink_800_800/0/1728989559776?e=1734368400&v=beta&t=TSsqEkwG2Xsou-ATvuM8jPR9cZSTdg1iourBOrkqkAo',
+        image: NVIDIADeepLearning,
     },
     {
         title: 'Machine Learning with Python',
@@ -32,6 +37,6 @@ export const RelatedList = [
     {
         title: 'Algorithm Bootcamp Certificate',
         description: '',
-        image: 'https://media.licdn.com/dms/image/v2/D562DAQHaTi7MxIiKJA/profile-treasury-image-shrink_800_800/profile-treasury-image-shrink_800_800/0/1728228223374?e=1734368400&v=beta&t=vvuw5tmUYDeK0JmuNqpATnQy52i2UxFhxyEb5s9XvS0',
+        image: AlgorithmBootcamp,
     },
 ]
