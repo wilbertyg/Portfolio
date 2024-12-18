@@ -1,5 +1,5 @@
 import guarjian from '../../assets/guarjian.png';
-import sentimentAnalysis from '../../assets/sentiment_analysis.png';
+import sentimentAnalysis from '../../assets/sentiment.png';
 import monkeyPoxPredictorGUI from '../../assets/monkey_pox_predictor_GUI.png';
 
 export const ProjectList = [
