@@ -2,6 +2,8 @@ import competitiveProgramming from '../../assets/TECHFEST_Wilbert Yang_First Pla
 import NVIDIATransformer from '../../assets/NVIDIA_DLI_Transformer_Certificate_Wilbert.png';
 import NVIDIADeepLearning from '../../assets/NVIDIA_DLI_FDL.png';
 import AlgorithmBootcamp from '../../assets/Algorithm Bootcamp_Wilbert Yang.png';
+import MLwithPy from '../../assets/Machine_learning_with_python.jpeg';
+import PythonforDS from '../../assets/Python_for_data_science.jpeg';
 
 export const RelatedList = [
     {
@@ -27,12 +29,12 @@ export const RelatedList = [
     {
         title: 'Machine Learning with Python',
         description: '',
-        image: 'https://media.licdn.com/dms/image/v2/D562DAQEGO3rr8rx_8A/profile-treasury-document-images_800/profile-treasury-document-images_800/1/1728228401385?e=1734566400&v=beta&t=Dfg5qRSq1rOANuxVmwm7Vt1BgU34Zte-kVDnik7mAoI',
+        image: MLwithPy,
     },
     {
         title: 'Python 101 for Data Science',
         description: '',
-        image: 'https://media.licdn.com/dms/image/v2/D562DAQGGd8aEb77Qgg/profile-treasury-document-images_800/profile-treasury-document-images_800/1/1728228376505?e=1734566400&v=beta&t=Y6cqtnssqvVLatASYhTLLv0eUTsrK4L2eC2qvPe6--o',
+        image: PythonforDS,
     },
     {
         title: 'Algorithm Bootcamp Certificate',
