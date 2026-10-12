@@ -2,8 +2,8 @@ import { useEffect, useRef, useState, useMemo } from 'react'
 import { SkillIcon } from './SkillIcons'
 import { skillCategories } from './SkillList'
 
-// Dynamically derive technical skills from SkillList.js (single source of truth)
-const TECHNICAL_SKILLS = skillCategories.flatMap((category) => category.skills)
+// Dynamically derive unique technical skills from SkillList.js (single source of truth, deduplicated)
+const TECHNICAL_SKILLS = [...new Set(skillCategories.flatMap((category) => category.skills))]
 
 // Geometric parameters (compact spacing)
 const ITEMS_PER_STRAND = 38 // 0 to 37 indices per strand
@@ -15,7 +15,7 @@ const HALF_HEIGHT = TOTAL_HEIGHT / 2
 const VISIBLE_Y_CUTOFF = 960 // culling boundary for performance
 const AUTO_SPEED = 28 // continuous autonomous pace in pixels/second
 
-function TornadoHelix({ activeStrand }) {
+function TornadoHelix({ activeStrand, onSwitchToList }) {
     const containerRef = useRef(null)
     const stageRef = useRef(null)
     const itemElementsRef = useRef([])
@@ -243,9 +243,8 @@ function TornadoHelix({ activeStrand }) {
         <div
             ref={containerRef}
             aria-label="Interactive 3D Tornado Helix showcasing technical skills"
-            className={`group relative h-[520px] w-full overflow-hidden select-none bg-white transition-colors duration-200 dark:bg-[#111112] sm:h-[640px] lg:h-[740px] ${
-                dragActive ? 'cursor-grabbing' : 'cursor-grab'
-            }`}
+            className={`group relative h-[520px] w-full overflow-hidden select-none bg-white transition-colors duration-200 dark:bg-[#111112] sm:h-[640px] lg:h-[740px] ${dragActive ? 'cursor-grabbing' : 'cursor-grab'
+                }`}
         >
             {/* Subtle Vertical Eye-Axis Center Hairline */}
             <div className="pointer-events-none absolute top-0 bottom-0 left-1/2 z-0 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-[#EAEAEA] to-transparent dark:via-[#27272A]" />
@@ -264,22 +263,36 @@ function TornadoHelix({ activeStrand }) {
                     </span>
                 </div>
 
-                <div className="flex items-center gap-2.5 pointer-events-auto">
+                <div className="flex items-center gap-2 pointer-events-auto">
+                    {onSwitchToList && (
+                        <button
+                            type="button"
+                            onClick={onSwitchToList}
+                            className="inline-flex items-center gap-1.5 rounded-full border border-[#EAEAEA] bg-white px-2.5 py-1 font-mono text-[10px] font-medium text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition-colors hover:bg-[#F7F6F3] active:scale-[0.98] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#FBFBFA] dark:hover:bg-[#222225]"
+                            aria-label="Switch to standard list view"
+                        >
+                            <svg className="size-3 text-[#787774] dark:text-[#A1A1AA]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                <line x1="8" y1="6" x2="21" y2="6" />
+                                <line x1="8" y1="12" x2="21" y2="12" />
+                                <line x1="8" y1="18" x2="21" y2="18" />
+                                <line x1="3" y1="6" x2="3.01" y2="6" />
+                                <line x1="3" y1="12" x2="3.01" y2="12" />
+                                <line x1="3" y1="18" x2="3.01" y2="18" />
+                            </svg>
+                            <span>List View</span>
+                        </button>
+                    )}
                     <button
                         type="button"
                         onClick={() => setIsPaused((p) => !p)}
                         className="inline-flex items-center gap-1.5 rounded-full border border-[#EAEAEA] bg-white px-3 py-1 font-mono text-[10px] font-medium text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition-colors hover:bg-[#F7F6F3] active:scale-[0.98] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#FBFBFA] dark:hover:bg-[#222225]"
                     >
                         <span
-                            className={`size-1.5 rounded-full ${
-                                isPaused ? 'bg-[#956400]' : 'bg-[#346538]'
-                            }`}
+                            className={`size-1.5 rounded-full ${isPaused ? 'bg-[#956400]' : 'bg-[#346538]'
+                                }`}
                         />
                         {isPaused ? 'Resume' : 'Pause'}
                     </button>
-                    <span className="hidden sm:inline-block font-mono text-[10px] text-[#787774] dark:text-[#A1A1AA]">
-                        Autonomous flow
-                    </span>
                 </div>
             </div>
 
@@ -333,11 +346,10 @@ function TornadoHelix({ activeStrand }) {
                                     {/* Minimalist Flat Card: Scaled 1.5x showing ONLY Skill Logo & Name */}
                                     <div
                                         draggable="false"
-                                        className={`group/card relative flex h-[105px] w-[310px] items-center gap-4.5 rounded-[16px] border bg-white px-4.5 py-3.5 select-none sm:h-[116px] sm:w-[354px] sm:gap-5 sm:px-5 sm:py-4 transition-colors duration-150 dark:bg-[#18181A] ${
-                                            isLit
+                                        className={`group/card relative flex h-[105px] w-[310px] items-center gap-4.5 rounded-[16px] border bg-white px-4.5 py-3.5 select-none sm:h-[116px] sm:w-[354px] sm:gap-5 sm:px-5 sm:py-4 transition-colors duration-150 dark:bg-[#18181A] ${isLit
                                                 ? 'border-[#111111] ring-1 ring-[#111111] shadow-[0_2px_8px_rgba(0,0,0,0.06)] dark:border-[#FBFBFA] dark:ring-[#FBFBFA]'
                                                 : 'border-[#EAEAEA] hover:border-[#111111] shadow-[0_1px_3px_rgba(0,0,0,0.02)] dark:border-[#27272A] dark:hover:border-[#3F3F46]'
-                                        }`}
+                                            }`}
                                     >
                                         {/* Skill Logo */}
                                         <div className="flex size-14 sm:size-16 shrink-0 items-center justify-center rounded-[12px] border border-[#EAEAEA] bg-[#F7F6F3] dark:border-[#27272A] dark:bg-[#141416]">

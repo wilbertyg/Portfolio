@@ -4,14 +4,14 @@ export const skillCategories = [
         title: 'Machine Learning & AI',
         description: 'Predictive modeling, deep neural networks, and data pipelines',
         dot: 'bg-[#1F6C9F]',
-        skills: ['Python', 'TensorFlow', 'Scikit-Learn', 'Pandas', 'NumPy', 'OpenCV', 'Matplotlib', 'Transformers', 'LangGraph'],
+        skills: ['Python', 'PyTorch', 'Scikit-Learn', 'Pandas', 'NumPy', 'OpenCV', 'Matplotlib', 'Transformers', 'LangGraph'],
     },
     {
         id: 'lang',
         title: 'Programming & Databases',
         description: 'Systems languages, relational data, and web fundamentals',
         dot: 'bg-[#346538]',
-        skills: ['C / C++', 'JavaScript', 'MySQL', 'HTML5 / CSS3', 'React'],
+        skills: ['Python', 'C / C++', 'JavaScript', 'MySQL', 'HTML5 / CSS3', 'React'],
     },
     {
         id: 'tools',
