@@ -3,74 +3,74 @@ import Button from '../Button/Button'
 import CV from '../../assets/CV_Wilbert Yang.pdf'
 import Socials from '../Socials'
 
-function TrophyLogo() {
-    return (
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M6 9H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2" />
-            <path d="M18 9h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2" />
-            <path d="M6 3h12v7a6 6 0 0 1-12 0V3z" />
-            <path d="M12 16v4" />
-            <path d="M8 20h8" />
-            <polyline points="10 8 9 9 10 10" />
-            <polyline points="14 8 15 9 14 10" />
-        </svg>
-    )
-}
+// function TrophyLogo() {
+//     return (
+//         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+//             <path d="M6 9H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2" />
+//             <path d="M18 9h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2" />
+//             <path d="M6 3h12v7a6 6 0 0 1-12 0V3z" />
+//             <path d="M12 16v4" />
+//             <path d="M8 20h8" />
+//             <polyline points="10 8 9 9 10 10" />
+//             <polyline points="14 8 15 9 14 10" />
+//         </svg>
+//     )
+// }
 
-function NvidiaLogo() {
-    return (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M8.948 7.377c-.15 0-.294.01-.433.023-1.892.176-3.37 1.63-3.666 3.473-.327 2.036.93 4.025 2.923 4.639 1.993.614 4.148-.28 5.034-2.088.163-.332.257-.698.274-1.076.04-.897-.247-1.782-.81-2.482-.82-1.018-2.072-1.614-3.376-1.614l.054 1.125c.954 0 1.871.437 2.47 1.18.43.535.65 1.209.62 1.892-.014.288-.086.567-.21.82-.676 1.38-2.32 2.062-3.84 1.593-1.52-.468-2.479-1.986-2.23-3.54.226-1.408 1.353-2.518 2.796-2.651.107-.01.216-.017.33-.017v-1.125zm3.176-2.336c-.47-.03-1.018-.041-1.62-.041-3.69 0-6.85 2.508-7.73 6.06-.82 3.32.74 6.75 3.77 8.28 3.03 1.53 6.74.84 8.94-1.69 1.13-1.3 1.77-2.94 1.8-4.66.03-1.85-.62-3.6-1.8-4.94-1.33-1.52-3.33-2.4-5.36-2.4l.07 1.13c1.7 0 3.37.74 4.48 2.01 1 1.14 1.55 2.62 1.53 4.19-.02 1.45-.57 2.85-1.53 3.94-1.86 2.14-5 2.72-7.56 1.42-2.56-1.3-3.89-4.2-3.19-7 .74-2.99 3.4-5.11 6.51-5.11.51 0 .97.01 1.37.03l.28-1.28zm2.4-2.041c-.93-.05-1.97-.08-3.08-.08-4.96 0-9.28 3.19-10.74 7.78C-.02 15.01 2.05 19.64 6.01 21.6c3.96 1.96 8.84 1.05 11.83-2.2 1.6-1.74 2.51-3.99 2.56-6.36.05-2.53-.88-4.96-2.53-6.82-1.95-2.21-4.85-3.48-7.87-3.48l.08 1.13c2.68 0 5.25 1.12 6.98 3.08 1.47 1.66 2.3 3.82 2.25 6.07-.05 2.11-.86 4.11-2.28 5.66-2.66 2.89-7 3.7-10.53 1.95-3.53-1.75-5.38-5.87-4.43-9.7C1.19 7.42 5.03 4.58 9.44 4.58c.99 0 1.91.03 2.75.07l.33-1.65z" />
-        </svg>
-    )
-}
+// function NvidiaLogo() {
+//     return (
+//         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+//             <path d="M8.948 7.377c-.15 0-.294.01-.433.023-1.892.176-3.37 1.63-3.666 3.473-.327 2.036.93 4.025 2.923 4.639 1.993.614 4.148-.28 5.034-2.088.163-.332.257-.698.274-1.076.04-.897-.247-1.782-.81-2.482-.82-1.018-2.072-1.614-3.376-1.614l.054 1.125c.954 0 1.871.437 2.47 1.18.43.535.65 1.209.62 1.892-.014.288-.086.567-.21.82-.676 1.38-2.32 2.062-3.84 1.593-1.52-.468-2.479-1.986-2.23-3.54.226-1.408 1.353-2.518 2.796-2.651.107-.01.216-.017.33-.017v-1.125zm3.176-2.336c-.47-.03-1.018-.041-1.62-.041-3.69 0-6.85 2.508-7.73 6.06-.82 3.32.74 6.75 3.77 8.28 3.03 1.53 6.74.84 8.94-1.69 1.13-1.3 1.77-2.94 1.8-4.66.03-1.85-.62-3.6-1.8-4.94-1.33-1.52-3.33-2.4-5.36-2.4l.07 1.13c1.7 0 3.37.74 4.48 2.01 1 1.14 1.55 2.62 1.53 4.19-.02 1.45-.57 2.85-1.53 3.94-1.86 2.14-5 2.72-7.56 1.42-2.56-1.3-3.89-4.2-3.19-7 .74-2.99 3.4-5.11 6.51-5.11.51 0 .97.01 1.37.03l.28-1.28zm2.4-2.041c-.93-.05-1.97-.08-3.08-.08-4.96 0-9.28 3.19-10.74 7.78C-.02 15.01 2.05 19.64 6.01 21.6c3.96 1.96 8.84 1.05 11.83-2.2 1.6-1.74 2.51-3.99 2.56-6.36.05-2.53-.88-4.96-2.53-6.82-1.95-2.21-4.85-3.48-7.87-3.48l.08 1.13c2.68 0 5.25 1.12 6.98 3.08 1.47 1.66 2.3 3.82 2.25 6.07-.05 2.11-.86 4.11-2.28 5.66-2.66 2.89-7 3.7-10.53 1.95-3.53-1.75-5.38-5.87-4.43-9.7C1.19 7.42 5.03 4.58 9.44 4.58c.99 0 1.91.03 2.75.07l.33-1.65z" />
+//         </svg>
+//     )
+// }
 
-function BinusLogo() {
-    return (
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-            <path d="M6 12v5c3 3 9 3 12 0v-5" />
-            <circle cx="12" cy="12" r="1.5" fill="currentColor" />
-        </svg>
-    )
-}
+// function BinusLogo() {
+//     return (
+//         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+//             <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+//             <path d="M6 12v5c3 3 9 3 12 0v-5" />
+//             <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+//         </svg>
+//     )
+// }
 
-function GdscLogo() {
-    return (
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <polyline points="7 8 3 12 7 16" />
-            <polyline points="17 8 21 12 17 16" />
-            <line x1="14" y1="4" x2="10" y2="20" />
-        </svg>
-    )
-}
+// function GdscLogo() {
+//     return (
+//         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+//             <polyline points="7 8 3 12 7 16" />
+//             <polyline points="17 8 21 12 17 16" />
+//             <line x1="14" y1="4" x2="10" y2="20" />
+//         </svg>
+//     )
+// }
 
-const highlights = [
-    {
-        logo: <TrophyLogo />,
-        badgeBg: 'bg-[#FBF3DB] text-[#956400]',
-        heading: '1st Place Winner',
-        sub: 'TECHFEST 2024 Competitive Programming',
-    },
-    {
-        logo: <NvidiaLogo />,
-        badgeBg: 'bg-[#EDF3EC] text-[#346538]',
-        heading: 'NVIDIA Certified',
-        sub: 'Deep Learning & NLP Transformers',
-    },
-    {
-        logo: <BinusLogo />,
-        badgeBg: 'bg-[#E1F3FE] text-[#1F6C9F]',
-        heading: 'BINUS University',
-        sub: 'CS / Artificial Intelligence',
-    },
-    {
-        logo: <GdscLogo />,
-        badgeBg: 'bg-[#FDEBEC] text-[#9F2F2D]',
-        heading: 'Community Activist',
-        sub: 'BINUS DSC Education & Dev',
-    },
-]
+// const highlights = [
+//     {
+//         logo: <TrophyLogo />,
+//         badgeBg: 'bg-[#FBF3DB] text-[#956400]',
+//         heading: '1st Place Winner',
+//         sub: 'TECHFEST 2024 Competitive Programming',
+//     },
+//     {
+//         logo: <NvidiaLogo />,
+//         badgeBg: 'bg-[#EDF3EC] text-[#346538]',
+//         heading: 'NVIDIA Certified',
+//         sub: 'Deep Learning & NLP Transformers',
+//     },
+//     {
+//         logo: <BinusLogo />,
+//         badgeBg: 'bg-[#E1F3FE] text-[#1F6C9F]',
+//         heading: 'BINUS University',
+//         sub: 'CS / Artificial Intelligence',
+//     },
+//     {
+//         logo: <GdscLogo />,
+//         badgeBg: 'bg-[#FDEBEC] text-[#9F2F2D]',
+//         heading: 'Community Activist',
+//         sub: 'BINUS DSC Education & Dev',
+//     },
+// ]
 
 function About() {
     return (
