@@ -1,35 +1,114 @@
-import Card from '../Card/Card2'
+import { useState, useEffect, useRef, useCallback } from 'react'
+import Card2 from '../Card/Card2'
 import { RelatedList } from './RelatedList'
-import './Related.css'
-import Socials from '../Socials'
-import { motion } from 'motion/react'
+import SectionHeader from '../SectionHeader'
+import { motion, AnimatePresence } from 'motion/react'
+
+function CertificateDialog({ cert, onClose }) {
+    const closeRef = useRef(null)
+
+    useEffect(() => {
+        const previouslyFocused = document.activeElement
+        closeRef.current?.focus()
+        document.body.style.overflow = 'hidden'
+
+        const onKeyDown = (e) => {
+            if (e.key === 'Escape') onClose()
+        }
+        window.addEventListener('keydown', onKeyDown)
+        return () => {
+            window.removeEventListener('keydown', onKeyDown)
+            document.body.style.overflow = ''
+            previouslyFocused?.focus?.()
+        }
+    }, [onClose])
+
+    return (
+        <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#111111]/60 p-4 backdrop-blur-xs md:p-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+        >
+            <motion.div
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="cert-dialog-title"
+                className="flex max-h-[95vh] w-full max-w-[800px] flex-col gap-4 overflow-y-auto rounded-[10px] border border-[#EAEAEA] bg-white p-5 md:max-h-[90vh] md:p-6"
+                initial={{ scale: 0.98, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.98, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={(e) => e.stopPropagation()}
+            >
+                <div className="flex items-start justify-between gap-4">
+                    <div>
+                        <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#787774]">{cert.category}</span>
+                        <h3 id="cert-dialog-title" className="mt-1 font-serif text-xl font-normal leading-snug text-[#111111] md:text-2xl">
+                            {cert.title}
+                        </h3>
+                        <p className="mt-0.5 text-xs text-[#787774]">
+                            {cert.issuer}
+                            {cert.year && ` · ${cert.year}`}
+                        </p>
+                    </div>
+                    <button
+                        ref={closeRef}
+                        type="button"
+                        onClick={onClose}
+                        aria-label="Close preview"
+                        className="flex items-center justify-center rounded-[6px] border border-[#EAEAEA] bg-[#F7F6F3] p-1.5 text-[#787774] transition-colors hover:border-[#111111] hover:text-[#111111]"
+                    >
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div className="flex w-full items-center justify-center overflow-hidden rounded-[8px] border border-[#EAEAEA] bg-[#F7F6F3]">
+                    <img src={cert.image} alt={`${cert.title} certificate`} className="max-h-[58vh] max-w-full object-contain" />
+                </div>
+
+                {cert.description && <p className="text-xs leading-relaxed text-[#787774]">{cert.description}</p>}
+            </motion.div>
+        </motion.div>
+    )
+}
 
 function Related() {
-    const variants = { 
-        initial: { opacity: 0, y: 100 },
-        animate: { opacity: 1, y: 0 },
-    }
+    const [activeCert, setActiveCert] = useState(null)
+    const closeDialog = useCallback(() => setActiveCert(null), [])
+
     return (
-        <div className='related' id='others'>
-            <section className='related-containers'>
-                <h1>RELATED EXPERIENCE</h1>
-                <div className='related-container'>
-                    {RelatedList.map((related, index) => (
-                        <motion.div key={index} variants={variants} initial='initial' transition={{duration: 1, ease: "easeInOut", delay: 0.2 * index + 0.2}} whileInView="animate" viewport={{once:true}}>
-                            <Card 
-                                title={related.title} 
-                                description={related.description} 
-                                image={related.image} 
-                                url={related.url} 
-                            />
-                        </motion.div>
+        <section id="certifications" className="relative w-full px-6 py-20 md:py-28">
+            <div id="others" className="absolute top-0" aria-hidden="true" />
+
+            <div className="mx-auto w-full max-w-5xl">
+                <SectionHeader tag="Credentials" title="Certifications & Honors">
+                    Professional credentials in deep learning, transformer architectures, and algorithms.
+                </SectionHeader>
+
+                <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                    {RelatedList.map((cert, index) => (
+                        <motion.li
+                            key={cert.id}
+                            initial={{ opacity: 0, y: 12 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-20px' }}
+                            transition={{ duration: 0.3, delay: index * 0.05 }}
+                        >
+                            <Card2 {...cert} onPreview={() => setActiveCert(cert)} />
+                        </motion.li>
                     ))}
-                </div>
-            </section>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '30px' }}>
-                <Socials />
+                </ul>
             </div>
-        </div>
+
+            <AnimatePresence>
+                {activeCert && <CertificateDialog cert={activeCert} onClose={closeDialog} />}
+            </AnimatePresence>
+        </section>
     )
 }
 
