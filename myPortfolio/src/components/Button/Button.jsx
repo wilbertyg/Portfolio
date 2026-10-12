@@ -3,11 +3,11 @@ const base =
 
 const variants = {
     primary:
-        'border-[#111111] bg-[#111111] text-white hover:bg-[#2A2A2A] active:scale-[0.98]',
+        'border-[#111111] bg-[#111111] text-white hover:bg-[#2A2A2A] active:scale-[0.98] dark:border-[#FBFBFA] dark:bg-[#FBFBFA] dark:text-[#111111] dark:hover:bg-[#E5E5E5]',
     secondary:
-        'border-[#EAEAEA] bg-white text-[#111111] hover:border-[#111111] hover:bg-[#F7F6F3] active:scale-[0.98]',
+        'border-[#EAEAEA] bg-white text-[#111111] hover:border-[#111111] hover:bg-[#F7F6F3] active:scale-[0.98] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#FBFBFA] dark:hover:border-[#3F3F46] dark:hover:bg-[#222225]',
     ghost:
-        'border-transparent bg-transparent text-[#787774] hover:bg-[#F7F6F3] hover:text-[#111111] active:scale-[0.98]',
+        'border-transparent bg-transparent text-[#787774] hover:bg-[#F7F6F3] hover:text-[#111111] active:scale-[0.98] dark:text-[#A1A1AA] dark:hover:bg-[#18181A] dark:hover:text-[#FBFBFA]',
 }
 
 const sizes = {

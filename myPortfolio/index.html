@@ -1,11 +1,25 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/png" href="/w_logo.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Wilbert Yang — Computer Science Undergraduate specializing in Artificial Intelligence and Data Science." />
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        if (saved === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
   <link rel="preconnect" href="https://api.fontshare.com">
   <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +33,7 @@
   <title>Wilbert Yang — AI &amp; Data Science</title>
 </head>
 
-<body class="bg-[#FBFBFA] text-[#111111] antialiased selection:bg-[#E1F3FE] selection:text-[#1F6C9F]">
+<body class="bg-[#FBFBFA] dark:bg-[#111112] text-[#111111] dark:text-[#FBFBFA] antialiased selection:bg-[#E1F3FE] selection:text-[#1F6C9F] dark:selection:bg-[#1E3A5F] dark:selection:text-[#93C5FD] transition-colors duration-200">
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
 </body>

@@ -243,25 +243,22 @@ function TornadoHelix({ activeStrand }) {
         <div
             ref={containerRef}
             aria-label="Interactive 3D Tornado Helix showcasing technical skills"
-            className={`group relative h-[520px] w-full overflow-hidden select-none bg-white transition-colors sm:h-[640px] lg:h-[740px] ${
+            className={`group relative h-[520px] w-full overflow-hidden select-none bg-white transition-colors duration-200 dark:bg-[#111112] sm:h-[640px] lg:h-[740px] ${
                 dragActive ? 'cursor-grabbing' : 'cursor-grab'
             }`}
         >
             {/* Subtle Vertical Eye-Axis Center Hairline */}
-            <div className="pointer-events-none absolute top-0 bottom-0 left-1/2 z-0 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-[#EAEAEA] to-transparent" />
+            <div className="pointer-events-none absolute top-0 bottom-0 left-1/2 z-0 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-[#EAEAEA] to-transparent dark:via-[#27272A]" />
 
             {/* Top Atmospheric Header Controls (Minimalist Editorial Styling) */}
             <div className="absolute top-4 inset-x-5 z-30 flex items-center justify-between text-xs pointer-events-none md:inset-x-6">
                 <div className="flex items-center gap-2 pointer-events-auto">
-                    {/* <span className="font-mono text-[11px] font-medium uppercase tracking-wider text-[#111111]">
-                        3D Helix
-                    </span> */}
-                    <span className="h-3 w-px bg-[#EAEAEA]" />
-                    <span className="inline-flex items-center gap-1.5 rounded-full border border-[#EAEAEA] bg-[#F7F6F3] px-2.5 py-0.5 font-mono text-[10px] text-[#111111]">
+                    <span className="h-3 w-px bg-[#EAEAEA] dark:bg-[#27272A]" />
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-[#EAEAEA] bg-[#F7F6F3] px-2.5 py-0.5 font-mono text-[10px] text-[#111111] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#FBFBFA]">
                         <span className="size-1.5 rounded-full bg-[#1F6C9F]" />
                         Strand α
                     </span>
-                    <span className="inline-flex items-center gap-1.5 rounded-full border border-[#EAEAEA] bg-[#F7F6F3] px-2.5 py-0.5 font-mono text-[10px] text-[#111111]">
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-[#EAEAEA] bg-[#F7F6F3] px-2.5 py-0.5 font-mono text-[10px] text-[#111111] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#FBFBFA]">
                         <span className="size-1.5 rounded-full bg-[#346538]" />
                         Strand β
                     </span>
@@ -271,7 +268,7 @@ function TornadoHelix({ activeStrand }) {
                     <button
                         type="button"
                         onClick={() => setIsPaused((p) => !p)}
-                        className="inline-flex items-center gap-1.5 rounded-full border border-[#EAEAEA] bg-white px-3 py-1 font-mono text-[10px] font-medium text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition-colors hover:bg-[#F7F6F3] active:scale-[0.98]"
+                        className="inline-flex items-center gap-1.5 rounded-full border border-[#EAEAEA] bg-white px-3 py-1 font-mono text-[10px] font-medium text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition-colors hover:bg-[#F7F6F3] active:scale-[0.98] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#FBFBFA] dark:hover:bg-[#222225]"
                     >
                         <span
                             className={`size-1.5 rounded-full ${
@@ -280,7 +277,7 @@ function TornadoHelix({ activeStrand }) {
                         />
                         {isPaused ? 'Resume' : 'Pause'}
                     </button>
-                    <span className="hidden sm:inline-block font-mono text-[10px] text-[#787774]">
+                    <span className="hidden sm:inline-block font-mono text-[10px] text-[#787774] dark:text-[#A1A1AA]">
                         Autonomous flow
                     </span>
                 </div>
@@ -336,20 +333,20 @@ function TornadoHelix({ activeStrand }) {
                                     {/* Minimalist Flat Card: Scaled 1.5x showing ONLY Skill Logo & Name */}
                                     <div
                                         draggable="false"
-                                        className={`group/card relative flex h-[105px] w-[310px] items-center gap-4.5 rounded-[16px] border bg-white px-4.5 py-3.5 select-none sm:h-[116px] sm:w-[354px] sm:gap-5 sm:px-5 sm:py-4 transition-colors duration-150 ${
+                                        className={`group/card relative flex h-[105px] w-[310px] items-center gap-4.5 rounded-[16px] border bg-white px-4.5 py-3.5 select-none sm:h-[116px] sm:w-[354px] sm:gap-5 sm:px-5 sm:py-4 transition-colors duration-150 dark:bg-[#18181A] ${
                                             isLit
-                                                ? 'border-[#111111] ring-1 ring-[#111111] shadow-[0_2px_8px_rgba(0,0,0,0.06)]'
-                                                : 'border-[#EAEAEA] hover:border-[#111111] shadow-[0_1px_3px_rgba(0,0,0,0.02)]'
+                                                ? 'border-[#111111] ring-1 ring-[#111111] shadow-[0_2px_8px_rgba(0,0,0,0.06)] dark:border-[#FBFBFA] dark:ring-[#FBFBFA]'
+                                                : 'border-[#EAEAEA] hover:border-[#111111] shadow-[0_1px_3px_rgba(0,0,0,0.02)] dark:border-[#27272A] dark:hover:border-[#3F3F46]'
                                         }`}
                                     >
                                         {/* Skill Logo */}
-                                        <div className="flex size-14 sm:size-16 shrink-0 items-center justify-center rounded-[12px] border border-[#EAEAEA] bg-[#F7F6F3]">
+                                        <div className="flex size-14 sm:size-16 shrink-0 items-center justify-center rounded-[12px] border border-[#EAEAEA] bg-[#F7F6F3] dark:border-[#27272A] dark:bg-[#141416]">
                                             <SkillIcon name={item.name} className="size-7 sm:size-8" />
                                         </div>
 
                                         {/* Skill Name */}
                                         <div className="min-w-0 flex-1">
-                                            <p className="truncate font-sans text-[16px] sm:text-[18px] font-medium text-[#111111] tracking-tight">
+                                            <p className="truncate font-sans text-[16px] sm:text-[18px] font-medium text-[#111111] tracking-tight dark:text-[#FBFBFA]">
                                                 {item.name}
                                             </p>
                                         </div>
@@ -361,9 +358,9 @@ function TornadoHelix({ activeStrand }) {
                 </div>
             </div>
 
-            {/* Seamless Pure White Gradient Fades for Top & Bottom Boundaries */}
-            <div className="pointer-events-none absolute top-0 inset-x-0 h-16 bg-gradient-to-b from-white to-transparent z-20" />
-            <div className="pointer-events-none absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-white to-transparent z-20" />
+            {/* Seamless Boundary Gradient Fades */}
+            <div className="pointer-events-none absolute top-0 inset-x-0 h-16 bg-gradient-to-b from-white to-transparent z-20 dark:from-[#111112]" />
+            <div className="pointer-events-none absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-white to-transparent z-20 dark:from-[#111112]" />
         </div>
     )
 }

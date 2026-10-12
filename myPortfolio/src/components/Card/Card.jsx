@@ -1,7 +1,7 @@
 function Card({ title, description, image, url, category, tags = [], btnText = 'View Repository' }) {
     return (
-        <article className="group flex h-full flex-col overflow-hidden rounded-[10px] border border-[#EAEAEA] bg-white transition-[border-color,transform] duration-200 hover:border-[#111111]">
-            <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-[#EAEAEA] bg-[#F7F6F3]">
+        <article className="group flex h-full flex-col overflow-hidden rounded-[10px] border border-[#EAEAEA] bg-white transition-[border-color,transform] duration-200 hover:border-[#111111] dark:border-[#27272A] dark:bg-[#18181A] dark:hover:border-[#3F3F46]">
+            <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-[#EAEAEA] bg-[#F7F6F3] dark:border-[#27272A] dark:bg-[#141416]">
                 <img
                     src={image}
                     alt=""
@@ -9,7 +9,7 @@ function Card({ title, description, image, url, category, tags = [], btnText = '
                     className="size-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
                 />
                 {category && (
-                    <span className="absolute top-3 left-3 rounded-full border border-[#EAEAEA] bg-white/95 px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-[#111111] backdrop-blur-xs">
+                    <span className="absolute top-3 left-3 rounded-full border border-[#EAEAEA] bg-white/95 px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-[#111111] backdrop-blur-xs dark:border-[#27272A] dark:bg-[#18181A]/95 dark:text-[#FBFBFA]">
                         {category}
                     </span>
                 )}
@@ -17,26 +17,26 @@ function Card({ title, description, image, url, category, tags = [], btnText = '
 
             <div className="flex flex-1 flex-col justify-between gap-4 p-5">
                 <div className="flex flex-col gap-1.5">
-                    <h3 className="font-sans text-base font-semibold leading-snug text-[#111111]">{title}</h3>
-                    <p className="text-xs leading-relaxed text-[#787774]">{description}</p>
+                    <h3 className="font-sans text-base font-semibold leading-snug text-[#111111] dark:text-[#FBFBFA]">{title}</h3>
+                    <p className="text-xs leading-relaxed text-[#787774] dark:text-[#A1A1AA]">{description}</p>
                 </div>
 
                 {tags.length > 0 && (
                     <ul className="flex flex-wrap gap-1.5" aria-label="Technologies">
                         {tags.map((tag) => (
-                            <li key={tag} className="rounded-[4px] border border-[#EAEAEA] bg-[#F7F6F3] px-2 py-0.5 font-mono text-[10px] text-[#787774]">
+                            <li key={tag} className="rounded-[4px] border border-[#EAEAEA] bg-[#F7F6F3] px-2 py-0.5 font-mono text-[10px] text-[#787774] dark:border-[#27272A] dark:bg-[#141416] dark:text-[#A1A1AA]">
                                 {tag}
                             </li>
                         ))}
                     </ul>
                 )}
 
-                <div className="border-t border-[#EAEAEA] pt-3">
+                <div className="border-t border-[#EAEAEA] pt-3 dark:border-[#27272A]">
                     <a
                         href={url}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#111111] transition-colors duration-150 hover:text-[#787774]"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#111111] transition-colors duration-150 hover:text-[#787774] dark:text-[#FBFBFA] dark:hover:text-[#A1A1AA]"
                     >
                         <span>{btnText}</span>
                         <span className="sr-only">: {title} (opens in a new tab)</span>

@@ -60,7 +60,7 @@ function Socials({ showLabels = false, className = '' }) {
                     href={social.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex size-9 items-center justify-center gap-2 rounded-[6px] border border-[#EAEAEA] bg-white text-[#787774] transition-all duration-150 hover:border-[#111111] hover:bg-[#F7F6F3] hover:text-[#111111] active:scale-[0.98]"
+                    className="inline-flex size-9 items-center justify-center gap-2 rounded-[6px] border border-[#EAEAEA] bg-white text-[#787774] transition-all duration-150 hover:border-[#111111] hover:bg-[#F7F6F3] hover:text-[#111111] active:scale-[0.98] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#A1A1AA] dark:hover:border-[#FBFBFA] dark:hover:bg-[#222225] dark:hover:text-[#FBFBFA]"
                     title={social.title || social.name}
                     aria-label={social.name}
                     onClick={social.onClick}

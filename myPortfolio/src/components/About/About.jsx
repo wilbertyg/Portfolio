@@ -81,15 +81,15 @@ function About() {
 
 
                     {/* Editorial Serif Heading */}
-                    <h1 className="font-serif text-5xl font-normal leading-[1.08] tracking-[-0.03em] text-[#111111] sm:text-6xl">
+                    <h1 className="font-serif text-5xl font-normal leading-[1.08] tracking-[-0.03em] text-[#111111] dark:text-[#FBFBFA] sm:text-6xl">
                         Wilbert Yang
                     </h1>
 
-                    <p className="text-lg font-medium text-[#787774] sm:text-xl">
-                        Computer Science Graduate <span className="mx-1 text-[#DCDCDA]" aria-hidden="true">·</span> Artificial Intelligence
+                    <p className="text-lg font-medium text-[#787774] dark:text-[#A1A1AA] sm:text-xl">
+                        Computer Science Graduate <span className="mx-1 text-[#DCDCDA] dark:text-[#3F3F46]" aria-hidden="true">·</span> Artificial Intelligence
                     </p>
 
-                    <p className="max-w-[580px] leading-[1.65] text-[#2F3437]">
+                    <p className="max-w-[580px] leading-[1.65] text-[#2F3437] dark:text-[#D4D4D8]">
                         Specializing in Artificial Intelligence, seeking an AI Engineer, Data Scientist or related role
                         to apply strong technical fundamentals, automation skills, and collaborative problem-solving to real-world engineering problems.
                     </p>
@@ -113,29 +113,29 @@ function About() {
                     </div>
 
                     <div className="mt-1 flex items-center gap-3">
-                        <span className="font-mono text-xs uppercase tracking-wider text-[#787774]">Connect</span>
+                        <span className="font-mono text-xs uppercase tracking-wider text-[#787774] dark:text-[#A1A1AA]">Connect</span>
                         <Socials />
                     </div>
                 </div>
 
                 <div className="w-full max-w-[260px] shrink-0 lg:w-[280px] lg:max-w-none">
-                    <div className="group flex flex-col gap-3 rounded-[10px] border border-[#EAEAEA] bg-white p-3">
-                        <div className="aspect-square w-full overflow-hidden rounded-[8px] bg-[#F7F6F3]">
+                    <div className="group flex flex-col gap-3 rounded-[10px] border border-[#EAEAEA] bg-white p-3 dark:border-[#27272A] dark:bg-[#18181A]">
+                        <div className="aspect-square w-full overflow-hidden rounded-[8px] bg-[#F7F6F3] dark:bg-[#141416]">
                             <img
                                 src={Profile}
                                 alt="Portrait of Wilbert Yang"
                                 className="size-full object-cover object-[center_20%] transition-transform duration-300 group-hover:scale-[1.02]"
                             />
                         </div>
-                        <dl className="flex items-center justify-around rounded-[6px] border border-[#EAEAEA] bg-[#F7F6F3] px-2 py-1.5">
+                        <dl className="flex items-center justify-around rounded-[6px] border border-[#EAEAEA] bg-[#F7F6F3] px-2 py-1.5 dark:border-[#27272A] dark:bg-[#141416]">
                             <div className="flex flex-col items-center gap-0.5">
-                                <dt className="font-mono text-[10px] uppercase tracking-wider text-[#787774]">Location</dt>
-                                <dd className="text-xs font-medium text-[#111111]">Indonesia</dd>
+                                <dt className="font-mono text-[10px] uppercase tracking-wider text-[#787774] dark:text-[#A1A1AA]">Location</dt>
+                                <dd className="text-xs font-medium text-[#111111] dark:text-[#FBFBFA]">Indonesia</dd>
                             </div>
-                            <div className="h-5 w-px bg-[#EAEAEA]" aria-hidden="true" />
+                            <div className="h-5 w-px bg-[#EAEAEA] dark:bg-[#27272A]" aria-hidden="true" />
                             <div className="flex flex-col items-center gap-0.5">
-                                <dt className="font-mono text-[10px] uppercase tracking-wider text-[#787774]">Focus</dt>
-                                <dd className="text-xs font-medium text-[#111111]">AI / Machine Learning</dd>
+                                <dt className="font-mono text-[10px] uppercase tracking-wider text-[#787774] dark:text-[#A1A1AA]">Focus</dt>
+                                <dd className="text-xs font-medium text-[#111111] dark:text-[#FBFBFA]">AI / Machine Learning</dd>
                             </div>
                         </dl>
                     </div>
