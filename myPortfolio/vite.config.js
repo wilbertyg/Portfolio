@@ -16,6 +16,8 @@ const virtualTailwindPlugin = () => {
       if (id === resolvedVirtualId) {
         return `@import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: "Satoshi", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-serif: "Newsreader", "Instrument Serif", Georgia, serif;

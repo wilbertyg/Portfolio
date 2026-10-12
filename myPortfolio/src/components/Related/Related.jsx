@@ -25,7 +25,7 @@ function CertificateDialog({ cert, onClose }) {
 
     return (
         <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#111111]/60 p-4 backdrop-blur-xs md:p-6"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#111111]/60 p-4 backdrop-blur-xs dark:bg-black/80 md:p-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -35,7 +35,7 @@ function CertificateDialog({ cert, onClose }) {
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="cert-dialog-title"
-                className="flex max-h-[95vh] w-full max-w-[800px] flex-col gap-4 overflow-y-auto rounded-[10px] border border-[#EAEAEA] bg-white p-5 md:max-h-[90vh] md:p-6"
+                className="flex max-h-[95vh] w-full max-w-[800px] flex-col gap-4 overflow-y-auto rounded-[10px] border border-[#EAEAEA] bg-white p-5 dark:border-[#27272A] dark:bg-[#18181A] md:max-h-[90vh] md:p-6"
                 initial={{ scale: 0.98, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.98, opacity: 0 }}
@@ -44,11 +44,11 @@ function CertificateDialog({ cert, onClose }) {
             >
                 <div className="flex items-start justify-between gap-4">
                     <div>
-                        <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#787774]">{cert.category}</span>
-                        <h3 id="cert-dialog-title" className="mt-1 font-serif text-xl font-normal leading-snug text-[#111111] md:text-2xl">
+                        <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#787774] dark:text-[#A1A1AA]">{cert.category}</span>
+                        <h3 id="cert-dialog-title" className="mt-1 font-serif text-xl font-normal leading-snug text-[#111111] dark:text-[#FBFBFA] md:text-2xl">
                             {cert.title}
                         </h3>
-                        <p className="mt-0.5 text-xs text-[#787774]">
+                        <p className="mt-0.5 text-xs text-[#787774] dark:text-[#A1A1AA]">
                             {cert.issuer}
                             {cert.year && ` · ${cert.year}`}
                         </p>
@@ -58,7 +58,7 @@ function CertificateDialog({ cert, onClose }) {
                         type="button"
                         onClick={onClose}
                         aria-label="Close preview"
-                        className="flex items-center justify-center rounded-[6px] border border-[#EAEAEA] bg-[#F7F6F3] p-1.5 text-[#787774] transition-colors hover:border-[#111111] hover:text-[#111111]"
+                        className="flex items-center justify-center rounded-[6px] border border-[#EAEAEA] bg-[#F7F6F3] p-1.5 text-[#787774] transition-colors hover:border-[#111111] hover:text-[#111111] dark:border-[#27272A] dark:bg-[#141416] dark:text-[#A1A1AA] dark:hover:border-[#FBFBFA] dark:hover:text-[#FBFBFA]"
                     >
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                             <line x1="18" y1="6" x2="6" y2="18" />
@@ -67,11 +67,11 @@ function CertificateDialog({ cert, onClose }) {
                     </button>
                 </div>
 
-                <div className="flex w-full items-center justify-center overflow-hidden rounded-[8px] border border-[#EAEAEA] bg-[#F7F6F3]">
+                <div className="flex w-full items-center justify-center overflow-hidden rounded-[8px] border border-[#EAEAEA] bg-[#F7F6F3] dark:border-[#27272A] dark:bg-[#141416]">
                     <img src={cert.image} alt={`${cert.title} certificate`} className="max-h-[58vh] max-w-full object-contain" />
                 </div>
 
-                {cert.description && <p className="text-xs leading-relaxed text-[#787774]">{cert.description}</p>}
+                {cert.description && <p className="text-xs leading-relaxed text-[#787774] dark:text-[#A1A1AA]">{cert.description}</p>}
             </motion.div>
         </motion.div>
     )

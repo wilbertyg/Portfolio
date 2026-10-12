@@ -26,7 +26,7 @@ function Projects() {
                         <div
                             role="group"
                             aria-label="Filter projects"
-                            className="flex flex-wrap items-center gap-1 rounded-full border border-[#EAEAEA] bg-[#F7F6F3] p-1 self-start md:self-auto"
+                            className="flex flex-wrap items-center gap-1 rounded-full border border-[#EAEAEA] bg-[#F7F6F3] p-1 self-start md:self-auto dark:border-[#27272A] dark:bg-[#18181A]"
                         >
                             {filters.map((filter) => {
                                 const isActive = selectedFilter === filter
@@ -38,8 +38,8 @@ function Projects() {
                                         onClick={() => setSelectedFilter(filter)}
                                         className={`rounded-full px-3 py-1 font-mono text-[11px] transition-colors duration-150 ${
                                             isActive
-                                                ? 'border border-[#EAEAEA] bg-white font-semibold text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.04)]'
-                                                : 'font-medium text-[#787774] hover:text-[#111111]'
+                                                ? 'border border-[#EAEAEA] bg-white font-semibold text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
+                                                : 'font-medium text-[#787774] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
                                         }`}
                                     >
                                         {filter}
