@@ -17,7 +17,7 @@ const virtualTailwindPlugin = () => {
         return `@import "tailwindcss";
 
 @theme {
-  --font-sans: "Geist", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: "Satoshi", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-serif: "Newsreader", "Instrument Serif", Georgia, serif;
   --font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
 
