@@ -101,68 +101,62 @@ vec3 sampleRibbon(
   // Orthogonal signed distance d to the curve
   float dist = (q.y - yCenter) * invSec;
   
-  // Modulate ribbon width along its length (parts pinch into sharp prism, parts diffuse out wide)
-  float widthMod = widthBase * (1.0 + 0.45 * sin(u * 1.4 + t * 0.30 + timeOffset));
-  widthMod = max(widthMod, 0.018);
+  // Modulate ribbon width along its length (graceful breathing, never pinches to a disconnect)
+  float widthMod = widthBase * (1.0 + 0.25 * sin(u * 1.2 + t * 0.30 + timeOffset));
+  widthMod = max(widthMod, 0.035);
   
   float nd = dist / widthMod;
   
-  // 1. Core Highlight: Soft, subtle specular sheen (does not wash out foreground text)
-  float coreIntensity = safeExp(nd * nd * 4.5);
+  // 1. Core Highlight: Soft, delicate specular sheen
+  float coreIntensity = safeExp(nd * nd * 4.0);
   vec3 coreColor = vec3(0.98, 0.96, 0.92);
   
-  // 2. Prismatic Spectral Dispersion (offsets perpendicular to curve normal)
+  // 2. Prismatic Spectral Dispersion (staggered across curve normal for a connected continuous spectrum)
   float disp = dispersionScale;
   
-  // 6 vibrant, non-harsh spectral wavelengths:
-  // Pastel Coral Red:
-  float dR = nd + 1.25 * disp;
+  // 6 continuous spectral wavelengths (Red -> Amber -> Mint -> Cyan -> Indigo -> Violet):
+  float dR = nd + 1.20 * disp;
   float sR = safeExp(dR * dR * 2.2);
-  vec3 colR = vec3(0.96, 0.38, 0.32);
+  vec3 colR = vec3(0.98, 0.32, 0.28);
   
-  // Pastel Warm Amber:
-  float dA = nd + 0.72 * disp;
+  float dA = nd + 0.68 * disp;
   float sA = safeExp(dA * dA * 2.2);
-  vec3 colA = vec3(0.98, 0.68, 0.28);
+  vec3 colA = vec3(0.98, 0.65, 0.24);
   
-  // Pastel Mint Green:
-  float dG = nd + 0.10 * disp;
+  float dG = nd + 0.08 * disp;
   float sG = safeExp(dG * dG * 2.2);
-  vec3 colG = vec3(0.32, 0.88, 0.58);
+  vec3 colG = vec3(0.30, 0.88, 0.52);
   
-  // Pastel Sky Cyan:
-  float dC = nd - 0.50 * disp;
+  float dC = nd - 0.48 * disp;
   float sC = safeExp(dC * dC * 2.2);
-  vec3 colC = vec3(0.25, 0.78, 0.94);
+  vec3 colC = vec3(0.22, 0.76, 0.96);
   
-  // Pastel Indigo Blue:
   float dB = nd - 0.95 * disp;
   float sB = safeExp(dB * dB * 2.2);
-  vec3 colB = vec3(0.42, 0.52, 0.96);
+  vec3 colB = vec3(0.40, 0.50, 0.98);
   
-  // Pastel Violet:
   float dV = nd - 1.40 * disp;
-  float sV = safeExp(dV * dV * 2.0);
-  vec3 colV = vec3(0.76, 0.42, 0.90);
+  float sV = safeExp(dV * dV * 2.2);
+  vec3 colV = vec3(0.78, 0.38, 0.92);
   
-  // The spectral rainbow fringe blooms along the outer edges of the beam:
-  float fringeMask = smoothstep(0.08, 0.55, abs(nd));
+  // Smooth Gaussian outer envelope across ribbon cross-section (continuous across center, NO hole)
+  float envelope = safeExp(nd * nd * 0.40);
+  float sumWeights = max(sR + sA + sG + sC + sB + sV, 0.001);
   
-  // Smooth Gaussian outer envelope for zero hard edges
-  float envelope = safeExp(nd * nd * 0.38);
+  vec3 spectralColor = (
+    colR * sR +
+    colA * sA +
+    colG * sG +
+    colC * sC +
+    colB * sB +
+    colV * sV
+  ) / sumWeights;
   
-  // Normalize color weights so multi-spectral overlaps do not additively blow out into bright white
-  float sumWeights = max(sR + sA + sG + sC + sB + sV, 1.0);
-  float fringeScale = 0.55 * fringeMask * envelope;
-  vec3 spectralFringe = (
-    (colR * sR + colA * sA + colG * sG + colC * sC + colB * sB + colV * sV) / sumWeights
-  ) * fringeScale;
+  // Entire ribbon is connected seamlessly: spectral color modulated by envelope + subtle luminous core
+  vec3 ribbonColor = (spectralColor * 0.50 + coreColor * (coreIntensity * 0.15)) * envelope;
   
-  // Combine delicate core highlight with pure spectral fringe
-  vec3 ribbonColor = coreColor * (coreIntensity * 0.15) + spectralFringe;
-  
-  // Subtle length attenuation towards extreme canvas boundaries
-  float lenFade = 1.0 - smoothstep(1.0, 2.4, abs(u));
+  // Subtle length attenuation only far outside the viewport boundary
+  float lenFade = 1.0 - smoothstep(2.8, 4.2, abs(u));
   
   return ribbonColor * lenFade;
 }
