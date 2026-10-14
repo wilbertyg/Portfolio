@@ -69,13 +69,15 @@ function Skills() {
                             >
                                 <button
                                     type="button"
+                                    id="tab-tornado"
                                     role="tab"
                                     aria-selected={viewMode === 'tornado'}
+                                    aria-controls="skills-display-panel"
                                     onClick={() => setViewMode('tornado')}
                                     className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[11px] font-medium transition-colors duration-150 active:scale-[0.98] ${
                                         viewMode === 'tornado'
                                             ? 'border border-[#EAEAEA] bg-white font-semibold text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
-                                            : 'text-[#787774] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
+                                            : 'text-[#71717A] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
                                     }`}
                                 >
                                     <TornadoIcon className="size-3.5" />
@@ -83,13 +85,15 @@ function Skills() {
                                 </button>
                                 <button
                                     type="button"
+                                    id="tab-list"
                                     role="tab"
                                     aria-selected={viewMode === 'list'}
+                                    aria-controls="skills-display-panel"
                                     onClick={() => setViewMode('list')}
                                     className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[11px] font-medium transition-colors duration-150 active:scale-[0.98] ${
                                         viewMode === 'list'
                                             ? 'border border-[#EAEAEA] bg-white font-semibold text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
-                                            : 'text-[#787774] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
+                                            : 'text-[#71717A] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
                                     }`}
                                 >
                                     <ListIcon className="size-3.5" />
@@ -110,7 +114,7 @@ function Skills() {
                                         className={`rounded-full px-2.5 py-1 font-mono text-[11px] font-medium transition-colors duration-150 ${
                                             activeStrand === null
                                                 ? 'border border-[#EAEAEA] bg-white text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
-                                                : 'text-[#787774] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
+                                                : 'text-[#71717A] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
                                         }`}
                                     >
                                         All Strands
@@ -121,7 +125,7 @@ function Skills() {
                                         className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-mono text-[11px] font-medium transition-colors duration-150 ${
                                             activeStrand === 'α'
                                                 ? 'border border-[#EAEAEA] bg-white text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
-                                                : 'text-[#787774] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
+                                                : 'text-[#71717A] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
                                         }`}
                                     >
                                         <span className="size-1.5 rounded-full bg-[#1F6C9F]" />
@@ -133,7 +137,7 @@ function Skills() {
                                         className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-mono text-[11px] font-medium transition-colors duration-150 ${
                                             activeStrand === 'β'
                                                 ? 'border border-[#EAEAEA] bg-white text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
-                                                : 'text-[#787774] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
+                                                : 'text-[#71717A] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
                                         }`}
                                     >
                                         <span className="size-1.5 rounded-full bg-[#346538]" />
@@ -146,7 +150,12 @@ function Skills() {
                 />
 
                 {/* Main Dynamic Container: 3D Tornado Helix OR Normal Categorized List */}
-                <div className="overflow-hidden rounded-[10px] border border-[#EAEAEA] bg-white dark:border-[#27272A] dark:bg-[#111112]">
+                <div
+                    id="skills-display-panel"
+                    role="tabpanel"
+                    aria-labelledby={viewMode === 'tornado' ? 'tab-tornado' : 'tab-list'}
+                    className="overflow-hidden rounded-[10px] border border-[#EAEAEA] bg-white dark:border-[#27272A] dark:bg-[#111112]"
+                >
                     <AnimatePresence mode="wait">
                         {viewMode === 'tornado' ? (
                             <motion.div

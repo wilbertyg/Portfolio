@@ -44,11 +44,11 @@ function CertificateDialog({ cert, onClose }) {
             >
                 <div className="flex items-start justify-between gap-4">
                     <div>
-                        <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#787774] dark:text-[#A1A1AA]">{cert.category}</span>
-                        <h3 id="cert-dialog-title" className="mt-1 font-serif text-xl font-normal leading-snug text-[#111111] dark:text-[#FBFBFA] md:text-2xl">
+                        <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#71717A] dark:text-[#A1A1AA]">{cert.category}</span>
+                        <h3 id="cert-dialog-title" className="mt-1 font-sans text-xl font-semibold leading-snug tracking-tight text-[#111111] dark:text-[#FBFBFA] md:text-2xl">
                             {cert.title}
                         </h3>
-                        <p className="mt-0.5 text-xs text-[#787774] dark:text-[#A1A1AA]">
+                        <p className="mt-0.5 text-xs text-[#71717A] dark:text-[#A1A1AA]">
                             {cert.issuer}
                             {cert.year && ` · ${cert.year}`}
                         </p>
@@ -58,7 +58,7 @@ function CertificateDialog({ cert, onClose }) {
                         type="button"
                         onClick={onClose}
                         aria-label="Close preview"
-                        className="flex items-center justify-center rounded-[6px] border border-[#EAEAEA] bg-[#F7F6F3] p-1.5 text-[#787774] transition-colors hover:border-[#111111] hover:text-[#111111] dark:border-[#27272A] dark:bg-[#141416] dark:text-[#A1A1AA] dark:hover:border-[#FBFBFA] dark:hover:text-[#FBFBFA]"
+                        className="flex items-center justify-center rounded-[6px] border border-[#EAEAEA] bg-[#F7F6F3] p-1.5 text-[#71717A] transition-colors hover:border-[#111111] hover:text-[#111111] dark:border-[#27272A] dark:bg-[#141416] dark:text-[#A1A1AA] dark:hover:border-[#FBFBFA] dark:hover:text-[#FBFBFA]"
                     >
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                             <line x1="18" y1="6" x2="6" y2="18" />
@@ -68,10 +68,10 @@ function CertificateDialog({ cert, onClose }) {
                 </div>
 
                 <div className="flex w-full items-center justify-center overflow-hidden rounded-[8px] border border-[#EAEAEA] bg-[#F7F6F3] dark:border-[#27272A] dark:bg-[#141416]">
-                    <img src={cert.image} alt={`${cert.title} certificate`} className="max-h-[58vh] max-w-full object-contain" />
+                    <img src={cert.image} alt={`${cert.title} certificate`} width="760" height="520" className="max-h-[58vh] max-w-full object-contain" />
                 </div>
 
-                {cert.description && <p className="text-xs leading-relaxed text-[#787774] dark:text-[#A1A1AA]">{cert.description}</p>}
+                {cert.description && <p className="text-xs leading-relaxed text-[#71717A] dark:text-[#A1A1AA]">{cert.description}</p>}
             </motion.div>
         </motion.div>
     )
@@ -86,7 +86,7 @@ function Related() {
             <div id="others" className="absolute top-0" aria-hidden="true" />
 
             <div className="mx-auto w-full max-w-5xl">
-                <SectionHeader tag="Credentials" title="Certifications & Honors">
+                <SectionHeader title="Certifications & Honors">
                     Professional credentials in deep learning, transformer architectures, and algorithms.
                 </SectionHeader>
 

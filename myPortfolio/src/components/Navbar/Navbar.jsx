@@ -37,10 +37,20 @@ function Navbar() {
             }
         }
 
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape' && mobileMenuOpen) {
+                setMobileMenuOpen(false)
+            }
+        }
+
         window.addEventListener('scroll', handleScroll, { passive: true })
+        window.addEventListener('keydown', handleKeyDown)
         handleScroll()
-        return () => window.removeEventListener('scroll', handleScroll)
-    }, [])
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+            window.removeEventListener('keydown', handleKeyDown)
+        }
+    }, [mobileMenuOpen])
 
     return (
         <header
@@ -50,6 +60,12 @@ function Navbar() {
                     : 'bg-[#FBFBFA]/90 dark:bg-[#111112]/90'
             }`}
         >
+            <a
+                href="#main-content"
+                className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-xs focus:font-semibold focus:text-[#111111] focus:shadow-md focus:ring-2 focus:ring-[#111111] dark:focus:bg-[#18181A] dark:focus:text-[#FBFBFA] dark:focus:ring-[#FBFBFA]"
+            >
+                Skip to main content
+            </a>
             <nav className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6" aria-label="Main">
                 <a href="#about" className="flex items-center gap-2.5 text-base font-semibold tracking-tight text-[#111111] dark:text-[#FBFBFA]">
                     <span>Wilbert Yang</span>

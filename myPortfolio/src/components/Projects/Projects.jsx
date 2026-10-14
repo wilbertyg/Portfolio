@@ -20,7 +20,6 @@ function Projects() {
         <section id="projects" className="relative w-full px-6 py-20 md:py-28">
             <div className="mx-auto w-full max-w-5xl">
                 <SectionHeader
-                    tag="Portfolio"
                     title="Featured Projects"
                     aside={
                         <div
@@ -39,7 +38,7 @@ function Projects() {
                                         className={`rounded-full px-3 py-1 font-mono text-[11px] transition-colors duration-150 ${
                                             isActive
                                                 ? 'border border-[#EAEAEA] bg-white font-semibold text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
-                                                : 'font-medium text-[#787774] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
+                                                : 'font-medium text-[#71717A] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
                                         }`}
                                     >
                                         {filter}

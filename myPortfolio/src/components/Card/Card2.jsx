@@ -3,6 +3,7 @@ function Card2({ title, issuer, year, category, image, onPreview }) {
         <button
             type="button"
             onClick={onPreview}
+            aria-label={`View credential: ${title}`}
             className="group flex h-full w-full flex-col overflow-hidden rounded-[10px] border border-[#EAEAEA] bg-white text-left transition-[border-color,transform] duration-200 hover:border-[#111111] dark:border-[#27272A] dark:bg-[#18181A] dark:hover:border-[#3F3F46]"
         >
             <div className="relative aspect-[16/10.5] w-full overflow-hidden border-b border-[#EAEAEA] bg-[#F7F6F3] dark:border-[#27272A] dark:bg-[#141416]">
@@ -10,6 +11,8 @@ function Card2({ title, issuer, year, category, image, onPreview }) {
                     src={image}
                     alt=""
                     loading="lazy"
+                    width="400"
+                    height="262"
                     className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                 />
                 <div className="absolute inset-0 flex items-center justify-center bg-[#111111]/30 opacity-0 backdrop-blur-xs transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100 dark:bg-black/50">
@@ -27,11 +30,11 @@ function Card2({ title, issuer, year, category, image, onPreview }) {
 
             <div className="flex flex-1 flex-col gap-1.5 p-4">
                 <div className="flex items-center justify-between gap-2">
-                    {category && <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-[#787774] dark:text-[#A1A1AA]">{category}</span>}
-                    {year && <span className="font-mono text-[10px] text-[#A1A1A0] dark:text-[#71717A]">{year}</span>}
+                    {category && <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-[#71717A] dark:text-[#A1A1AA]">{category}</span>}
+                    {year && <span className="font-mono text-[10px] text-[#71717A] dark:text-[#A1A1AA]">{year}</span>}
                 </div>
                 <h3 className="font-sans text-sm font-semibold leading-snug text-[#111111] dark:text-[#FBFBFA]">{title}</h3>
-                {issuer && <p className="text-xs text-[#787774] dark:text-[#A1A1AA]">{issuer}</p>}
+                {issuer && <p className="text-xs text-[#71717A] dark:text-[#A1A1AA]">{issuer}</p>}
             </div>
         </button>
     )

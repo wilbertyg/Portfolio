@@ -90,6 +90,10 @@ function TornadoHelix({ activeStrand, onSwitchToList }) {
         let prefersReduced = mediaQuery.matches
         const handleMediaChange = (e) => {
             prefersReduced = e.matches
+            if (!prefersReduced && !animFrameIdRef.current) {
+                lastFrameTime = performance.now()
+                animFrameIdRef.current = requestAnimationFrame(applyTransforms)
+            }
         }
         mediaQuery.addEventListener('change', handleMediaChange)
 

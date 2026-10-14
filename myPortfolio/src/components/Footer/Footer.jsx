@@ -11,11 +11,10 @@ function Footer() {
             <div className="mx-auto flex max-w-5xl flex-col gap-10">
                 <div className="flex flex-col items-start gap-6 border-b border-[#EAEAEA] pb-8 dark:border-[#27272A] md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-8 md:pb-10">
                     <div className="flex max-w-[500px] flex-col gap-2">
-                        <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#787774] dark:text-[#A1A1AA]">Get in touch</span>
-                        <h2 className="font-serif text-3xl font-normal leading-tight text-[#111111] dark:text-[#FBFBFA] md:text-4xl">
-                            Let&apos;s build something intelligent.
+                        <h2 className="font-sans text-2xl font-semibold leading-tight tracking-[-0.02em] text-balance text-[#111111] dark:text-[#FBFBFA] sm:text-3xl md:text-4xl">
+                            Let’s build something intelligent.
                         </h2>
-                        <p className="text-sm leading-relaxed text-[#787774] dark:text-[#A1A1AA]">
+                        <p className="text-sm leading-relaxed text-[#71717A] dark:text-[#A1A1AA]">
                             Open to machine learning internships, technical collaborations, and research opportunities.
                         </p>
                     </div>
@@ -36,12 +35,13 @@ function Footer() {
                 </div>
 
                 <div className="flex flex-col-reverse items-start gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-                    <p className="font-mono text-xs text-[#A1A1A0] dark:text-[#71717A]">© {new Date().getFullYear()} Wilbert Yang. All rights reserved.</p>
+                    <p className="font-mono text-xs text-[#71717A] dark:text-[#A1A1AA]">© {new Date().getFullYear()} Wilbert Yang. All rights reserved.</p>
 
                     <button
                         type="button"
                         onClick={scrollToTop}
-                        className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#EAEAEA] bg-white px-2.5 py-1 font-mono text-xs text-[#787774] transition-colors hover:border-[#111111] hover:text-[#111111] active:scale-[0.98] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#A1A1AA] dark:hover:border-[#FBFBFA] dark:hover:text-[#FBFBFA]"
+                        aria-label="Scroll back to top"
+                        className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#EAEAEA] bg-white px-2.5 py-1 font-mono text-xs text-[#71717A] transition-colors hover:border-[#111111] hover:text-[#111111] active:scale-[0.98] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#A1A1AA] dark:hover:border-[#FBFBFA] dark:hover:text-[#FBFBFA]"
                     >
                         <span>Back to top</span>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

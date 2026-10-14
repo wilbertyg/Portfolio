@@ -54,7 +54,7 @@ function SkillListView({ onSwitchToTornado }) {
                         className={`rounded-full px-2.5 py-1 font-mono text-[11px] font-medium transition-colors duration-150 ${
                             selectedCategory === 'all'
                                 ? 'border border-[#EAEAEA] bg-[#F7F6F3] text-[#111111] dark:border-[#2E2E32] dark:bg-[#18181A] dark:text-[#FBFBFA]'
-                                : 'text-[#787774] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
+                                : 'text-[#71717A] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
                         }`}
                     >
                         All ({totalSkillCount})
@@ -71,7 +71,7 @@ function SkillListView({ onSwitchToTornado }) {
                                 className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-mono text-[11px] font-medium transition-colors duration-150 ${
                                     isActive
                                         ? 'border border-[#EAEAEA] bg-[#F7F6F3] text-[#111111] dark:border-[#2E2E32] dark:bg-[#18181A] dark:text-[#FBFBFA]'
-                                        : 'text-[#787774] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
+                                        : 'text-[#71717A] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
                                 }`}
                             >
                                 <span className={`size-1.5 rounded-full ${cat.dot}`} />
@@ -122,11 +122,11 @@ function SkillListView({ onSwitchToTornado }) {
                                         <h3 className="font-sans text-base font-semibold tracking-tight text-[#111111] dark:text-[#FBFBFA]">
                                             {cat.title}
                                         </h3>
-                                        <span className="rounded-full border border-[#EAEAEA] bg-[#F7F6F3] px-2 py-0.5 font-mono text-[10px] text-[#787774] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#A1A1AA]">
+                                        <span className="rounded-full border border-[#EAEAEA] bg-[#F7F6F3] px-2 py-0.5 font-mono text-[10px] text-[#71717A] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#A1A1AA]">
                                             {cat.skills.length}
                                         </span>
                                     </div>
-                                    <p className="text-xs text-[#787774] dark:text-[#A1A1AA]">
+                                    <p className="text-xs text-[#71717A] dark:text-[#A1A1AA]">
                                         {cat.description}
                                     </p>
                                 </div>
@@ -145,7 +145,7 @@ function SkillListView({ onSwitchToTornado }) {
                                                 <p className="truncate font-sans text-sm font-medium tracking-tight text-[#111111] dark:text-[#FBFBFA]">
                                                     {skill}
                                                 </p>
-                                                <span className="font-mono text-[10px] text-[#787774] dark:text-[#A1A1AA]">
+                                                <span className="font-mono text-[10px] text-[#71717A] dark:text-[#A1A1AA]">
                                                     {cat.title.split('&')[0].trim()}
                                                 </span>
                                             </div>

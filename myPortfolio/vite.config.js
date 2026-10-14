@@ -52,67 +52,6 @@ const virtualTailwindPlugin = () => {
   --color-cat-tools: #956400;
   --color-cat-core: #9F2F2D;
 
-  --animate-pulse-dot: pulse-dot 2s infinite;
-
-  @keyframes pulse-dot {
-    0% { box-shadow: 0 0 0 0 rgb(52 101 56 / 0.4); }
-    70% { box-shadow: 0 0 0 6px rgb(52 101 56 / 0); }
-    100% { box-shadow: 0 0 0 0 rgb(52 101 56 / 0); }
-  }
-
-  /* 3D Double Helix Tornado Orbit for Billboarded Chips */
-  @keyframes double-helix-orbit {
-    0% {
-      transform: translateY(var(--y)) rotateY(0deg) translateZ(var(--r)) rotateY(0deg);
-      opacity: 1;
-    }
-    25% {
-      opacity: 0.75;
-    }
-    50% {
-      transform: translateY(var(--y)) rotateY(180deg) translateZ(var(--r)) rotateY(-180deg);
-      opacity: 0.22;
-    }
-    75% {
-      opacity: 0.75;
-    }
-    100% {
-      transform: translateY(var(--y)) rotateY(360deg) translateZ(var(--r)) rotateY(-360deg);
-      opacity: 1;
-    }
-  }
-
-  /* 3D Connective Base-Pair Rung Rotation across Central Tornado Axis */
-  @keyframes helix-rung-orbit {
-    0% {
-      transform: translateY(var(--y)) rotateY(0deg);
-      opacity: 0.35;
-    }
-    25% {
-      opacity: 0.55;
-    }
-    50% {
-      transform: translateY(var(--y)) rotateY(180deg);
-      opacity: 0.18;
-    }
-    75% {
-      opacity: 0.55;
-    }
-    100% {
-      transform: translateY(var(--y)) rotateY(360deg);
-      opacity: 0.35;
-    }
-  }
-
-  /* Atmospheric Tornado 3D Sway */
-  @keyframes helix-sway {
-    from {
-      transform: rotateX(-8deg) rotateZ(-2.5deg);
-    }
-    to {
-      transform: rotateX(-8deg) rotateZ(2.5deg);
-    }
-  }
 }
 
 @layer base {
@@ -139,6 +78,10 @@ const virtualTailwindPlugin = () => {
   :focus-visible {
     outline: 2px solid #111111;
     outline-offset: 2px;
+  }
+
+  .dark :focus-visible {
+    outline-color: #FBFBFA;
   }
 
   @media (prefers-reduced-motion: reduce) {
