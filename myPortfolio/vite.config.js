@@ -63,7 +63,7 @@ const virtualTailwindPlugin = () => {
   }
 
   body {
-    background-color: #FBFBFA;
+    background-color: transparent;
     color: #111111;
     font-family: var(--font-sans);
     line-height: 1.6;

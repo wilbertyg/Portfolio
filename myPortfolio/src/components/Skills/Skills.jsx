@@ -54,7 +54,7 @@ function Skills() {
     const [activeStrand, setActiveStrand] = useState(null)
 
     return (
-        <section id="skills" className="relative w-full bg-white px-6 py-20 md:py-28 border-y border-[#EAEAEA] dark:border-[#27272A] dark:bg-[#141416]">
+        <section id="skills" className="relative w-full bg-transparent px-6 py-20 md:py-28">
             <div className="mx-auto w-full max-w-5xl">
                 <SectionHeader
                     tag="Capabilities"

@@ -13,11 +13,11 @@ function About() {
                         Wilbert Yang
                     </h1>
 
-                    <p className="text-lg font-medium text-[#787774] dark:text-[#A1A1AA] sm:text-xl">
+                    <p className="text-lg font-medium text-[#4B4B4E] dark:text-[#D4D4D8] sm:text-xl">
                         Computer Science Graduate <span className="mx-1 text-[#DCDCDA] dark:text-[#3F3F46]" aria-hidden="true">·</span> Artificial Intelligence
                     </p>
 
-                    <p className="max-w-[580px] leading-[1.65] text-[#2F3437] dark:text-[#D4D4D8]">
+                    <p className="max-w-[580px] leading-[1.65] text-[#2F3437] dark:text-[#E4E4E7]">
                         Specializing in Artificial Intelligence and Data Science to build scalable machine learning architectures and automated real-world solutions.
                     </p>
 
@@ -40,7 +40,7 @@ function About() {
                     </div>
 
                     <div className="mt-1 flex items-center gap-3">
-                        <span className="font-mono text-xs uppercase tracking-wider text-[#71717A] dark:text-[#A1A1AA]">Connect</span>
+                        <span className="font-mono text-xs uppercase tracking-wider text-[#52525B] dark:text-[#D4D4D8]">Connect</span>
                         <Socials />
                     </div>
                 </div>
@@ -53,7 +53,7 @@ function About() {
                                 alt="Portrait of Wilbert Yang"
                                 width="280"
                                 height="280"
-                                fetchpriority="high"
+                                fetchPriority="high"
                                 className="size-full object-cover object-[center_20%] transition-transform duration-300 group-hover:scale-[1.02]"
                             />
                         </div>
