@@ -59,7 +59,8 @@ vec2 rotate2D(vec2 v, float angle) {
   return vec2(c * v.x - s * v.y, s * v.x + c * v.y);
 }
 
-// Evaluates a single wandering prismatic light ribbon with chromatic dispersion
+// Evaluates a wandering prismatic light ribbon with fluid water caustics,
+// undulating wave refraction, and an organic water dissolve-and-return cycle.
 vec3 sampleRibbon(
   vec2 p,
   float angle,
@@ -67,7 +68,8 @@ vec3 sampleRibbon(
   float timeOffset,
   float widthBase,
   float speed,
-  float dispersionScale
+  float dispersionScale,
+  float dissolvePhase
 ) {
   // Rotate and translate coordinate space for this ribbon path
   vec2 q = rotate2D(p - offset, angle);
@@ -79,21 +81,29 @@ vec3 sampleRibbon(
   float warp1 = domainWarp(vec2(u * 0.6, 0.0), t * 0.35, timeOffset);
   float warp2 = domainWarp(vec2(u * 1.2, 0.5), -t * 0.25, timeOffset + 2.5);
   
+  // Water wave undulation (fluid surface refraction that gently ripples the ribbon)
+  float waterRipple = sin(u * 2.6 + t * 0.70) * 0.032
+                    + cos(u * 4.2 - t * 0.95) * 0.016;
+  
   // Ribbon centerline yCenter(u)
   float yCenter = sin(u * 1.10 + t * 0.40) * 0.25
                 + cos(u * 0.55 - t * 0.25) * 0.18
                 + warp1 * 0.22
-                + warp2 * 0.10;
+                + warp2 * 0.10
+                + waterRipple;
                 
   // Gradient estimation for orthogonal normal calculation
   float eps = 0.015;
   float uNext = u + eps;
   float warp1Next = domainWarp(vec2(uNext * 0.6, 0.0), t * 0.35, timeOffset);
   float warp2Next = domainWarp(vec2(uNext * 1.2, 0.5), -t * 0.25, timeOffset + 2.5);
+  float waterRippleNext = sin(uNext * 2.6 + t * 0.70) * 0.032
+                        + cos(uNext * 4.2 - t * 0.95) * 0.016;
   float yCenterNext = sin(uNext * 1.10 + t * 0.40) * 0.25
                     + cos(uNext * 0.55 - t * 0.25) * 0.18
                     + warp1Next * 0.22
-                    + warp2Next * 0.10;
+                    + warp2Next * 0.10
+                    + waterRippleNext;
                     
   float slope = (yCenterNext - yCenter) / eps;
   float invSec = 1.0 / sqrt(1.0 + slope * slope);
@@ -101,8 +111,20 @@ vec3 sampleRibbon(
   // Orthogonal signed distance d to the curve
   float dist = (q.y - yCenter) * invSec;
   
-  // Modulate ribbon width along its length (graceful breathing, never pinches to a disconnect)
-  float widthMod = widthBase * (1.0 + 0.25 * sin(u * 1.2 + t * 0.30 + timeOffset));
+  // Water swell cycle (temporal ebb and flow ~ 14-16s period)
+  float swell = sin(u_time * 0.42 + dissolvePhase);
+  
+  // Multi-directional water caustic wave interference along the ribbon body
+  float caustic1 = sin(u * 3.2 + q.y * 5.0 + t * 0.85);
+  float caustic2 = cos(u * 2.1 - q.y * 4.5 - t * 0.65);
+  float causticInterference = (caustic1 + caustic2) * 0.5;
+  
+  // Organic fluid dissolve mask: as swell lowers, ribbon breaks along caustic ripples and dissolves
+  float dissolveMask = smoothstep(-0.55, 0.45, swell + causticInterference * 0.35);
+  
+  // Light dispersion in water: when dissolving, light softly diffuses before fading
+  float waterDiffusion = 1.0 + (1.0 - dissolveMask) * 0.45;
+  float widthMod = widthBase * waterDiffusion * (1.0 + 0.22 * sin(u * 1.1 + t * 0.30));
   widthMod = max(widthMod, 0.035);
   
   float nd = dist / widthMod;
@@ -111,8 +133,8 @@ vec3 sampleRibbon(
   float coreIntensity = safeExp(nd * nd * 4.0);
   vec3 coreColor = vec3(0.98, 0.96, 0.92);
   
-  // 2. Prismatic Spectral Dispersion (staggered across curve normal for a connected continuous spectrum)
-  float disp = dispersionScale;
+  // 2. Prismatic Spectral Dispersion (staggered across curve normal with liquid breathing)
+  float disp = dispersionScale * (0.88 + 0.15 * sin(u * 1.4 - t * 0.35));
   
   // 6 continuous spectral wavelengths (Red -> Amber -> Mint -> Cyan -> Indigo -> Violet):
   float dR = nd + 1.20 * disp;
@@ -152,19 +174,23 @@ vec3 sampleRibbon(
     colV * sV
   ) / sumWeights;
   
+  // Water caustic shimmer modulation across the ribbon body
+  float waterCaustic = 0.84 + 0.22 * causticInterference;
+  
   // Entire ribbon is connected seamlessly: spectral color modulated by envelope + subtle luminous core
   vec3 ribbonColor = (spectralColor * 0.50 + coreColor * (coreIntensity * 0.15)) * envelope;
   
   // Subtle length attenuation only far outside the viewport boundary
   float lenFade = 1.0 - smoothstep(2.8, 4.2, abs(u));
   
-  return ribbonColor * lenFade;
+  // Modulate by fluid dissolve mask and water caustic shimmer
+  return ribbonColor * (lenFade * dissolveMask * waterCaustic);
 }
 
 void main() {
   vec2 p = (gl_FragCoord.xy - 0.5 * u_resolution) / max(min(u_resolution.x, u_resolution.y), 1.0);
   
-  // Ribbon 1: Primary Hero Ribbon (Diagonal sweep across center-upper)
+  // Ribbon 1: Primary Hero Ribbon (Phase 0.0)
   vec3 r1 = sampleRibbon(
     p,
     -0.58,                  // ~ -33 deg angle
@@ -172,10 +198,11 @@ void main() {
     0.0,                    // time offset
     0.075,                  // widthBase
     0.14,                   // speed
-    1.0                     // dispersionScale
+    1.0,                    // dispersionScale
+    0.0                     // dissolvePhase: 0 deg
   );
   
-  // Ribbon 2: Secondary Counter Ribbon (Weaves through lower-middle)
+  // Ribbon 2: Secondary Counter Ribbon (Phase ~ 120 deg)
   vec3 r2 = sampleRibbon(
     p,
     0.44,                   // ~ +25 deg angle
@@ -183,10 +210,11 @@ void main() {
     4.71,                   // time offset
     0.060,                  // widthBase
     0.11,                   // speed
-    0.92                    // dispersionScale
+    0.92,                   // dispersionScale
+    2.09                    // dissolvePhase: ~120 deg
   );
   
-  // Ribbon 3: Ambient Silk Thread (Floating across upper-left periphery)
+  // Ribbon 3: Ambient Silk Thread (Phase ~ 240 deg)
   vec3 r3 = sampleRibbon(
     p,
     -1.14,                  // ~ -65 deg angle
@@ -194,7 +222,8 @@ void main() {
     9.28,                   // time offset
     0.048,                  // widthBase
     0.09,                   // speed
-    0.85                    // dispersionScale
+    0.85,                   // dispersionScale
+    4.19                    // dissolvePhase: ~240 deg
   );
   
   // Smooth max-blend ribbons so overlapping ribbons do not blow out text contrast
