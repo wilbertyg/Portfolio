@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Card from '../Card/Card'
 import { ProjectList } from './ProjectList'
 import SectionHeader from '../SectionHeader'
-import { motion, AnimatePresence } from 'motion/react'
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
 
 const filters = ['All', 'Machine Learning', 'Deep Learning', 'Web Development']
 
@@ -14,6 +14,7 @@ const matches = (project, filter) => {
 
 function Projects() {
     const [selectedFilter, setSelectedFilter] = useState('All')
+    const shouldReduceMotion = useReducedMotion()
     const filteredProjects = ProjectList.filter((p) => matches(p, selectedFilter))
 
     return (
@@ -35,13 +36,24 @@ function Projects() {
                                         type="button"
                                         aria-pressed={isActive}
                                         onClick={() => setSelectedFilter(filter)}
-                                        className={`rounded-full px-3 py-1 font-mono text-[11px] transition-colors duration-150 ${
+                                        className={`relative rounded-full px-3 py-1 font-mono text-[11px] transition-colors duration-150 active:scale-[0.97] ${
                                             isActive
-                                                ? 'border border-[#EAEAEA] bg-white font-semibold text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
+                                                ? 'font-semibold text-[#111111] dark:text-[#FBFBFA]'
                                                 : 'font-medium text-[#71717A] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
                                         }`}
                                     >
-                                        {filter}
+                                        {isActive && (
+                                            <motion.span
+                                                layoutId="activeProjectFilter"
+                                                className="absolute inset-0 rounded-full border border-[#EAEAEA] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:border-[#2E2E32] dark:bg-[#222225]"
+                                                transition={
+                                                    shouldReduceMotion
+                                                        ? { duration: 0 }
+                                                        : { type: 'spring', stiffness: 450, damping: 35 }
+                                                }
+                                            />
+                                        )}
+                                        <span className="relative z-10">{filter}</span>
                                     </button>
                                 )
                             })}

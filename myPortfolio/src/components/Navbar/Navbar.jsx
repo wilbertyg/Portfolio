@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
 import CV from '../../assets/CV_Wilbert Yang.pdf'
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
 
@@ -131,28 +132,37 @@ function Navbar() {
                 </div>
             </nav>
 
-            {mobileMenuOpen && (
-                <div id="mobile-menu" className="flex flex-col gap-2 border-b border-[#EAEAEA] bg-white px-6 pt-4 pb-6 dark:border-[#27272A] dark:bg-[#18181A] md:hidden">
-                    {navItems.map((item) => (
+            <AnimatePresence>
+                {mobileMenuOpen && (
+                    <motion.div
+                        id="mobile-menu"
+                        initial={{ opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+                        className="flex flex-col gap-2 border-b border-[#EAEAEA] bg-white px-6 pt-4 pb-6 dark:border-[#27272A] dark:bg-[#18181A] md:hidden"
+                    >
+                        {navItems.map((item) => (
+                            <a
+                                key={item.id}
+                                href={`#${item.id}`}
+                                className="border-b border-[#EAEAEA] py-2.5 text-sm font-medium text-[#787774] last-of-type:border-b-0 hover:text-[#111111] dark:border-[#27272A] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]"
+                                onClick={() => setMobileMenuOpen(false)}
+                            >
+                                {item.label}
+                            </a>
+                        ))}
                         <a
-                            key={item.id}
-                            href={`#${item.id}`}
-                            className="border-b border-[#EAEAEA] py-2.5 text-sm font-medium text-[#787774] last-of-type:border-b-0 hover:text-[#111111] dark:border-[#27272A] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]"
+                            href={CV}
+                            download
+                            className="mt-2 rounded-[6px] bg-[#111111] p-2.5 text-center text-xs font-semibold text-white active:scale-[0.98] dark:bg-[#FBFBFA] dark:text-[#111111]"
                             onClick={() => setMobileMenuOpen(false)}
                         >
-                            {item.label}
+                            Download CV
                         </a>
-                    ))}
-                    <a
-                        href={CV}
-                        download
-                        className="mt-2 rounded-[6px] bg-[#111111] p-2.5 text-center text-xs font-semibold text-white active:scale-[0.98] dark:bg-[#FBFBFA] dark:text-[#111111]"
-                        onClick={() => setMobileMenuOpen(false)}
-                    >
-                        Download CV
-                    </a>
-                </div>
-            )}
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </header>
     )
 }

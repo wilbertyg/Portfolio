@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
 
 function Socials({ showLabels = false, className = '' }) {
     const [copied, setCopied] = useState(false)
@@ -49,16 +50,50 @@ function Socials({ showLabels = false, className = '' }) {
                 title={copied ? 'Email address copied!' : 'Copy email address'}
                 aria-label={copied ? 'Email address copied' : 'Copy email address'}
             >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    {copied ? (
-                        <polyline points="20 6 9 17 4 12" />
-                    ) : (
-                        <>
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                            <polyline points="22,6 12,13 2,6" />
-                        </>
-                    )}
-                </svg>
+                <span className="relative flex size-4.5 items-center justify-center">
+                    <AnimatePresence mode="wait" initial={false}>
+                        {copied ? (
+                            <motion.svg
+                                key="check"
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                transition={{ duration: 0.14, ease: [0.16, 1, 0.3, 1] }}
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                aria-hidden="true"
+                            >
+                                <polyline points="20 6 9 17 4 12" />
+                            </motion.svg>
+                        ) : (
+                            <motion.svg
+                                key="mail"
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                transition={{ duration: 0.14, ease: [0.16, 1, 0.3, 1] }}
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                aria-hidden="true"
+                            >
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                <polyline points="22,6 12,13 2,6" />
+                            </motion.svg>
+                        )}
+                    </AnimatePresence>
+                </span>
                 {showLabels && <span className="text-xs">{copied ? 'Copied' : 'Email'}</span>}
             </button>
 
