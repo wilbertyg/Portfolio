@@ -44,27 +44,22 @@ function MoonIcon({ className = 'size-4' }) {
 
 function ThemeToggle({ className = '', showLabel = false }) {
     const { isDark, toggleTheme } = useTheme()
+    const label = isDark ? 'Switch to day (light mode)' : 'Switch to night (dark mode)'
 
     return (
         <button
             type="button"
             onClick={toggleTheme}
-            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-            title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-            className={`inline-flex items-center justify-center gap-2 rounded-[6px] border border-[#EAEAEA] bg-white p-2 text-xs font-medium text-[#111111] transition-all duration-150 hover:border-[#111111] hover:bg-[#F7F6F3] active:scale-[0.96] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#FBFBFA] dark:hover:border-[#3F3F46] dark:hover:bg-[#222225] ${className}`}
+            aria-label={label}
+            title={label}
+            className={`group inline-flex items-center justify-center gap-2 rounded-sm border-2 border-gold-dim bg-panel/80 p-2 font-pixel text-xs text-ink transition-all duration-150 hover:border-gold active:translate-y-px ${className}`}
         >
-            <span className="relative flex size-4 items-center justify-center transition-transform duration-200">
-                {isDark ? (
-                    <SunIcon className="size-4 text-[#FBFBFA] transition-transform duration-200 rotate-0 hover:rotate-45" />
-                ) : (
-                    <MoonIcon className="size-4 text-[#111111] transition-transform duration-200 rotate-0 hover:-rotate-12" />
-                )}
-            </span>
-            {showLabel && (
-                <span className="font-sans text-xs">
-                    {isDark ? 'Light mode' : 'Dark mode'}
-                </span>
+            {isDark ? (
+                <SunIcon className="size-4 text-xp transition-transform duration-300 group-hover:rotate-45" />
+            ) : (
+                <MoonIcon className="size-4 text-arcane transition-transform duration-300 group-hover:-rotate-12" />
             )}
+            {showLabel && <span>{isDark ? 'Day' : 'Night'}</span>}
         </button>
     )
 }

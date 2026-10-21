@@ -11,7 +11,7 @@ function Socials({ showLabels = false, className = '' }) {
     }
 
     const buttonClass =
-        'inline-flex size-9 items-center justify-center gap-2 rounded-[6px] border border-[#EAEAEA] bg-white text-[#71717A] transition-all duration-150 hover:border-[#111111] hover:bg-[#F7F6F3] hover:text-[#111111] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#111111] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#A1A1AA] dark:hover:border-[#FBFBFA] dark:hover:bg-[#222225] dark:hover:text-[#FBFBFA] dark:focus-visible:ring-[#FBFBFA]'
+        'inline-flex size-9 items-center justify-center gap-2 rounded-sm border-2 border-gold-dim bg-panel/80 text-ink-soft transition-all duration-150 hover:-translate-y-0.5 hover:border-gold hover:text-gold active:translate-y-0'
 
     return (
         <div className={`inline-flex items-center gap-1.5 ${className}`}>

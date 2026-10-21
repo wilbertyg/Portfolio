@@ -1,19 +1,19 @@
 const base =
-    'inline-flex items-center justify-center gap-2 whitespace-nowrap border font-medium leading-none transition-all duration-150 ease-out aria-disabled:pointer-events-none aria-disabled:opacity-50'
+    'inline-flex items-center justify-center gap-2 whitespace-nowrap border-2 font-display font-bold uppercase leading-none tracking-[0.12em] transition-all duration-150 ease-out active:translate-y-px aria-disabled:pointer-events-none aria-disabled:opacity-50'
 
 const variants = {
     primary:
-        'border-[#111111] bg-[#111111] text-white hover:bg-[#2A2A2A] active:scale-[0.98] dark:border-[#FBFBFA] dark:bg-[#FBFBFA] dark:text-[#111111] dark:hover:bg-[#E5E5E5]',
+        'border-gold bg-linear-to-b from-[#f9dc8c] to-[#c48a2c] text-[#2a1a05] shadow-[0_0_0_2px_var(--color-void),0_0_28px_-6px_var(--color-gold)] hover:brightness-110',
     secondary:
-        'border-[#EAEAEA] bg-white text-[#111111] hover:border-[#111111] hover:bg-[#F7F6F3] active:scale-[0.98] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#FBFBFA] dark:hover:border-[#3F3F46] dark:hover:bg-[#222225]',
+        'border-gold-dim bg-panel/80 text-ink backdrop-blur-sm hover:border-gold hover:bg-panel-2',
     ghost:
-        'border-transparent bg-transparent text-[#787774] hover:bg-[#F7F6F3] hover:text-[#111111] active:scale-[0.98] dark:text-[#A1A1AA] dark:hover:bg-[#18181A] dark:hover:text-[#FBFBFA]',
+        'border-transparent bg-transparent text-muted hover:bg-panel-2 hover:text-ink',
 }
 
 const sizes = {
-    sm: 'px-3 py-1.5 text-xs rounded-[4px]',
-    md: 'px-4 py-2.5 text-xs font-semibold rounded-[6px]',
-    lg: 'px-5 py-3 text-sm font-semibold rounded-[6px]',
+    sm: 'px-3 py-2 text-[11px] rounded-sm',
+    md: 'px-5 py-3 text-xs rounded-sm',
+    lg: 'px-6 py-3.5 text-sm rounded-sm',
 }
 
 /** Renders an <a> when given href, otherwise a <button>. Never nest it inside a link. */

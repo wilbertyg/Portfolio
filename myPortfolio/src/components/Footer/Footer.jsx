@@ -1,4 +1,11 @@
+import Panel from '../Panel'
 import Socials from '../Socials'
+
+const choices = [
+    { label: 'Send a raven', detail: 'ywilbert12@gmail.com', href: 'mailto:ywilbert12@gmail.com' },
+    { label: 'Visit the GitHub archives', detail: 'github.com/wilbertyg', href: 'https://github.com/wilbertyg', external: true },
+    { label: 'Meet at the LinkedIn tavern', detail: 'Wilbert Yang', href: 'https://www.linkedin.com/in/wilbert-yang-bb6515251/', external: true },
+]
 
 function Footer() {
     const scrollToTop = () => {
@@ -7,46 +14,69 @@ function Footer() {
     }
 
     return (
-        <footer className="mt-16 w-full border-t border-[#EAEAEA] bg-[#FBFBFA] px-6 pt-16 pb-10 dark:border-[#27272A] dark:bg-[#111112] md:pt-20 md:pb-12">
-            <div className="mx-auto flex max-w-5xl flex-col gap-10">
-                <div className="flex flex-col items-start gap-6 border-b border-[#EAEAEA] pb-8 dark:border-[#27272A] md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-8 md:pb-10">
-                    <div className="flex max-w-[500px] flex-col gap-2">
-                        <h2 className="font-sans text-2xl font-semibold leading-tight tracking-[-0.02em] text-balance text-[#111111] dark:text-[#FBFBFA] sm:text-3xl md:text-4xl">
-                            Let’s build something intelligent.
-                        </h2>
-                        <p className="text-sm leading-relaxed text-[#71717A] dark:text-[#A1A1AA]">
-                            Open to machine learning internships, technical collaborations, and research opportunities.
-                        </p>
-                    </div>
-
-                    <div className="flex flex-col items-start gap-3">
-                        <a
-                            href="mailto:ywilbert12@gmail.com"
-                            className="inline-flex items-center gap-2 rounded-[6px] border border-[#111111] bg-[#111111] px-4 py-2.5 text-xs font-semibold text-white transition-all duration-150 hover:bg-[#2A2A2A] active:scale-[0.98] dark:border-[#FBFBFA] dark:bg-[#FBFBFA] dark:text-[#111111] dark:hover:bg-[#E5E5E5]"
-                        >
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                                <polyline points="22,6 12,13 2,6" />
-                            </svg>
-                            <span>ywilbert12@gmail.com</span>
-                        </a>
-                        <Socials />
-                    </div>
+        <footer id="contact" data-zone="The Guild Hall" className="relative z-10 w-full px-4 pt-24 pb-10 sm:px-6 md:pt-32">
+            <div className="mx-auto flex max-w-4xl flex-col gap-10">
+                <div className="text-center">
+                    <span className="mb-3 flex items-center justify-center gap-2 font-pixel text-xs uppercase tracking-[0.25em] text-gold">
+                        <span aria-hidden="true" className="size-1.5 rotate-45 bg-gold" />
+                        Final Chapter
+                        <span aria-hidden="true" className="size-1.5 rotate-45 bg-gold" />
+                    </span>
+                    <h2 className="font-display text-3xl font-bold tracking-wide text-balance text-ink drop-shadow-[0_2px_12px_rgb(0_0_0/0.35)] sm:text-4xl md:text-5xl">
+                        Join the Party
+                    </h2>
                 </div>
 
-                <div className="flex flex-col-reverse items-start gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-                    <p className="font-mono text-xs text-[#71717A] dark:text-[#A1A1AA]">© {new Date().getFullYear()} Wilbert Yang. All rights reserved.</p>
+                <Panel className="p-5 pt-7 sm:p-8 sm:pt-9">
+                    <span className="absolute -top-3.5 left-5 rounded-sm border-2 border-gold-dim bg-panel-2 px-3 py-0.5 font-display text-xs font-bold uppercase tracking-[0.18em] text-gold">
+                        Guild Master
+                    </span>
+                    <p className="text-lg leading-relaxed text-ink sm:text-xl">
+                        A new party is forming. Wilbert is open to{' '}
+                        <strong className="text-gold">machine learning internships</strong>, technical collaborations, and research
+                        opportunities. Will you recruit him?
+                    </p>
 
+                    <ul className="mt-6 flex flex-col gap-1 border-t border-line pt-4">
+                        {choices.map((c) => (
+                            <li key={c.label}>
+                                <a
+                                    href={c.href}
+                                    {...(c.external && { target: '_blank', rel: 'noopener noreferrer' })}
+                                    className="group flex flex-col gap-0.5 rounded-sm px-3 py-3 transition-colors hover:bg-gold/10 focus-visible:bg-gold/10 sm:flex-row sm:items-center sm:justify-between"
+                                >
+                                    <span className="flex items-center gap-3 font-display text-base font-bold tracking-wide text-ink group-hover:text-gold">
+                                        <span aria-hidden="true" className="text-gold opacity-0 transition-opacity group-hover:animate-blink group-hover:opacity-100 group-focus-visible:opacity-100">
+                                            ▶
+                                        </span>
+                                        {c.label}
+                                    </span>
+                                    <span className="pl-7 font-pixel text-xs text-muted sm:pl-0">
+                                        {c.detail}
+                                        {c.external && <span className="sr-only"> (opens in a new tab)</span>}
+                                    </span>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+
+                    <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-line px-3 pt-5">
+                        <span className="font-pixel text-xs uppercase tracking-wider text-muted">Other spells</span>
+                        <Socials />
+                    </div>
+                </Panel>
+
+                <div className="flex flex-col-reverse items-center gap-4 text-center sm:flex-row sm:justify-between">
+                    <p className="font-pixel text-xs text-muted">
+                        © {new Date().getFullYear()} Wilbert Yang · Thanks for playing
+                    </p>
                     <button
                         type="button"
                         onClick={scrollToTop}
-                        aria-label="Scroll back to top"
-                        className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#EAEAEA] bg-white px-2.5 py-1 font-mono text-xs text-[#71717A] transition-colors hover:border-[#111111] hover:text-[#111111] active:scale-[0.98] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#A1A1AA] dark:hover:border-[#FBFBFA] dark:hover:text-[#FBFBFA]"
+                        className="inline-flex items-center gap-2 rounded-sm border-2 border-gold-dim bg-panel/80 px-3 py-1.5 font-pixel text-xs uppercase tracking-widest text-ink-soft backdrop-blur-sm transition-colors hover:border-gold hover:text-gold active:translate-y-px"
                     >
-                        <span>Back to top</span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                            <polyline points="18 15 12 9 6 15" />
-                        </svg>
+                        Return to title
+                        <span aria-hidden="true">▲</span>
                     </button>
                 </div>
             </div>

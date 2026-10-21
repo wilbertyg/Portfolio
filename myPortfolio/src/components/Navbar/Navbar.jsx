@@ -1,47 +1,60 @@
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react'
 import CV from '../../assets/CV_Wilbert Yang.pdf'
+import Profile from '../../assets/profile.jpg'
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
+import { player } from '../../game/player'
 
 const navItems = [
-    { label: 'About', id: 'about' },
-    { label: 'Skills', id: 'skills' },
-    { label: 'Projects', id: 'projects' },
-    { label: 'Certifications', id: 'certifications' },
+    { label: 'Character', id: 'about', key: '1' },
+    { label: 'Skills', id: 'skills', key: '2' },
+    { label: 'Quests', id: 'projects', key: '3' },
+    { label: 'Trophies', id: 'certifications', key: '4' },
+    { label: 'Guild', id: 'contact', key: '5' },
 ]
 
-function DownloadIcon() {
+function ScrollIcon() {
     return (
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-            <polyline points="7 10 12 15 17 10" />
-            <line x1="12" y1="15" x2="12" y2="3" />
+            <path d="M8 21h12a2 2 0 0 0 2-2v-2H10v2a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v3h4" />
+            <path d="M19 17V5a2 2 0 0 0-2-2H4" />
+            <path d="M15 8h-5" />
+            <path d="M15 12h-5" />
         </svg>
     )
 }
 
 function Navbar() {
-    const [activeSection, setActiveSection] = useState('about')
-    const [scrolled, setScrolled] = useState(false)
+    const [activeSection, setActiveSection] = useState(null)
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const { scrollYProgress } = useScroll()
+    const journey = useSpring(scrollYProgress, { stiffness: 120, damping: 30 })
 
     useEffect(() => {
         const handleScroll = () => {
-            setScrolled(window.scrollY > 20)
-            const scrollPos = window.scrollY + 120
+            const scrollPos = window.scrollY + 160
+            let current = null
             for (let i = navItems.length - 1; i >= 0; i--) {
                 const section = document.getElementById(navItems[i].id)
                 if (section && section.offsetTop <= scrollPos) {
-                    setActiveSection(navItems[i].id)
+                    current = navItems[i].id
                     break
                 }
             }
+            setActiveSection(current)
         }
 
         const handleKeyDown = (e) => {
             if (e.key === 'Escape' && mobileMenuOpen) {
                 setMobileMenuOpen(false)
+                return
             }
+            // RPG-style hotkeys: 1-5 jump to a menu entry
+            const tag = e.target.tagName
+            if (e.ctrlKey || e.metaKey || e.altKey || tag === 'INPUT' || tag === 'TEXTAREA' || e.target.isContentEditable) return
+            if (document.querySelector('[aria-modal="true"]')) return
+            const item = navItems.find((n) => n.key === e.key)
+            if (item) document.getElementById(item.id)?.scrollIntoView()
         }
 
         window.addEventListener('scroll', handleScroll, { passive: true })
@@ -54,80 +67,89 @@ function Navbar() {
     }, [mobileMenuOpen])
 
     return (
-        <header
-            className={`fixed inset-x-0 top-0 z-50 border-b border-[#EAEAEA] backdrop-blur-md transition-colors duration-200 dark:border-[#27272A] ${
-                scrolled
-                    ? 'bg-white/95 dark:bg-[#111112]/95'
-                    : 'bg-[#FBFBFA]/90 dark:bg-[#111112]/90'
-            }`}
-        >
+        <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4">
             <a
                 href="#main-content"
-                className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-xs focus:font-semibold focus:text-[#111111] focus:shadow-md focus:ring-2 focus:ring-[#111111] dark:focus:bg-[#18181A] dark:focus:text-[#FBFBFA] dark:focus:ring-[#FBFBFA]"
+                className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-sm focus:border-2 focus:border-gold focus:bg-panel focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-ink"
             >
                 Skip to main content
             </a>
-            <nav className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6" aria-label="Main">
-                <a href="#about" className="flex items-center gap-2.5 text-base font-semibold tracking-tight text-[#111111] dark:text-[#FBFBFA]">
-                    <span>Wilbert Yang</span>
+            <nav
+                className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 rounded-md border-2 border-gold-dim bg-panel/85 px-2.5 shadow-[0_0_0_1px_var(--color-void),0_12px_30px_-12px_rgb(0_0_0/0.7)] backdrop-blur-md"
+                aria-label="Main"
+            >
+                {/* Player frame */}
+                <a href="#top" className="group flex min-w-0 items-center gap-2.5" aria-label={`${player.name}, level ${player.level}. Back to title`}>
+                    <span className="relative shrink-0">
+                        <img src={Profile} alt="" width="36" height="36" className="size-9 rounded-full border-2 border-gold object-cover object-[center_20%]" />
+                        <span className="absolute -right-1.5 -bottom-1 rounded-sm border border-gold bg-void px-1 font-pixel text-[9px] leading-tight text-gold">
+                            {player.level}
+                        </span>
+                    </span>
+                    <span className="flex min-w-0 flex-col gap-1">
+                        <span className="truncate font-display text-sm font-bold leading-none tracking-wide text-ink group-hover:text-gold">
+                            {player.name}
+                        </span>
+                        <span className="flex items-center gap-1.5" aria-hidden="true">
+                            <span className="font-pixel text-[9px] leading-none text-muted">JOURNEY</span>
+                            <span className="h-1.5 w-20 overflow-hidden rounded-full border border-gold-dim bg-void/60 sm:w-28">
+                                <motion.span style={{ scaleX: journey }} className="block h-full origin-left bg-linear-to-r from-xp to-ember" />
+                            </span>
+                        </span>
+                    </span>
                 </a>
 
-                <div className="hidden items-center gap-1 rounded-full border border-[#EAEAEA] bg-[#F7F6F3] p-1 dark:border-[#27272A] dark:bg-[#18181A] md:flex">
+                <ul className="hidden items-center gap-0.5 lg:flex">
                     {navItems.map((item) => {
                         const isActive = activeSection === item.id
                         return (
-                            <a
-                                key={item.id}
-                                href={`#${item.id}`}
-                                aria-current={isActive ? 'true' : undefined}
-                                className={`rounded-full px-3.5 py-1 text-xs transition-colors duration-150 ${
-                                    isActive
-                                        ? 'border border-[#EAEAEA] bg-white font-semibold text-[#111111] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
-                                        : 'font-medium text-[#787774] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
-                                }`}
-                            >
-                                {item.label}
-                            </a>
+                            <li key={item.id}>
+                                <a
+                                    href={`#${item.id}`}
+                                    aria-current={isActive ? 'true' : undefined}
+                                    className={`group relative flex items-center gap-1.5 rounded-sm px-3 py-1.5 font-display text-xs font-bold uppercase tracking-[0.14em] transition-colors duration-150 ${
+                                        isActive ? 'bg-gold/15 text-gold' : 'text-ink-soft hover:text-gold'
+                                    }`}
+                                >
+                                    <span
+                                        aria-hidden="true"
+                                        className={`text-[10px] text-gold transition-opacity ${isActive ? 'opacity-100 animate-blink' : 'opacity-0 group-hover:opacity-100'}`}
+                                    >
+                                        ▶
+                                    </span>
+                                    {item.label}
+                                    <kbd className="rounded-[3px] border border-line px-1 font-pixel text-[9px] font-normal text-muted" aria-hidden="true">
+                                        {item.key}
+                                    </kbd>
+                                </a>
+                            </li>
                         )
                     })}
-                </div>
+                </ul>
 
-                <div className="hidden items-center gap-2 md:flex">
-                    <ThemeToggle />
+                <div className="hidden items-center gap-2 lg:flex">
+                    <ThemeToggle showLabel />
                     <a
                         href={CV}
                         download
-                        className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#EAEAEA] bg-white px-3 py-1.5 text-xs font-semibold text-[#111111] transition-all hover:border-[#111111] hover:bg-[#F7F6F3] active:scale-[0.98] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#FBFBFA] dark:hover:border-[#3F3F46] dark:hover:bg-[#222225]"
+                        className="inline-flex items-center gap-1.5 rounded-sm border-2 border-gold bg-linear-to-b from-[#f9dc8c] to-[#c48a2c] px-3 py-1.5 font-display text-xs font-bold uppercase tracking-[0.12em] text-[#2a1a05] transition hover:brightness-110 active:translate-y-px"
                     >
-                        <DownloadIcon />
+                        <ScrollIcon />
                         <span>CV</span>
                     </a>
                 </div>
 
-                <div className="flex items-center gap-1.5 md:hidden">
+                <div className="flex items-center gap-1.5 lg:hidden">
                     <ThemeToggle />
                     <button
                         type="button"
-                        className="flex items-center justify-center rounded-[6px] p-2 text-[#111111] transition-colors hover:bg-[#F7F6F3] dark:text-[#FBFBFA] dark:hover:bg-[#18181A]"
+                        className="flex items-center gap-1.5 rounded-sm border-2 border-gold-dim bg-panel/80 px-2.5 py-1.5 font-display text-xs font-bold uppercase tracking-[0.12em] text-ink transition-colors hover:border-gold"
                         onClick={() => setMobileMenuOpen((open) => !open)}
                         aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
                         aria-expanded={mobileMenuOpen}
                         aria-controls="mobile-menu"
                     >
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                            {mobileMenuOpen ? (
-                                <>
-                                    <line x1="18" y1="6" x2="6" y2="18" />
-                                    <line x1="6" y1="6" x2="18" y2="18" />
-                                </>
-                            ) : (
-                                <>
-                                    <line x1="4" y1="7" x2="20" y2="7" />
-                                    <line x1="4" y1="12" x2="20" y2="12" />
-                                    <line x1="4" y1="17" x2="20" y2="17" />
-                                </>
-                            )}
-                        </svg>
+                        {mobileMenuOpen ? 'Close' : 'Menu'}
                     </button>
                 </div>
             </nav>
@@ -136,28 +158,33 @@ function Navbar() {
                 {mobileMenuOpen && (
                     <motion.div
                         id="mobile-menu"
-                        initial={{ opacity: 0, y: -8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -8 }}
+                        initial={{ opacity: 0, y: -8, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -8, scale: 0.98 }}
                         transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-                        className="flex flex-col gap-2 border-b border-[#EAEAEA] bg-white px-6 pt-4 pb-6 dark:border-[#27272A] dark:bg-[#18181A] md:hidden"
+                        className="mx-auto mt-2 flex max-w-6xl flex-col gap-1 rounded-md border-2 border-gold-dim bg-panel/95 p-3 backdrop-blur-md lg:hidden"
                     >
                         {navItems.map((item) => (
                             <a
                                 key={item.id}
                                 href={`#${item.id}`}
-                                className="border-b border-[#EAEAEA] py-2.5 text-sm font-medium text-[#787774] last-of-type:border-b-0 hover:text-[#111111] dark:border-[#27272A] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]"
+                                aria-current={activeSection === item.id ? 'true' : undefined}
+                                className="group flex items-center gap-3 rounded-sm px-3 py-3 font-display text-sm font-bold uppercase tracking-[0.14em] text-ink-soft hover:bg-gold/10 hover:text-gold focus-visible:bg-gold/10 aria-[current=true]:text-gold"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
+                                <span aria-hidden="true" className="text-gold opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 group-aria-[current=true]:opacity-100">
+                                    ▶
+                                </span>
                                 {item.label}
                             </a>
                         ))}
                         <a
                             href={CV}
                             download
-                            className="mt-2 rounded-[6px] bg-[#111111] p-2.5 text-center text-xs font-semibold text-white active:scale-[0.98] dark:bg-[#FBFBFA] dark:text-[#111111]"
+                            className="mt-2 flex items-center justify-center gap-2 rounded-sm border-2 border-gold bg-linear-to-b from-[#f9dc8c] to-[#c48a2c] p-3 font-display text-xs font-bold uppercase tracking-[0.12em] text-[#2a1a05] active:translate-y-px"
                             onClick={() => setMobileMenuOpen(false)}
                         >
+                            <ScrollIcon />
                             Download CV
                         </a>
                     </motion.div>

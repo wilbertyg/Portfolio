@@ -1,202 +1,78 @@
-import { useState } from 'react'
+import { motion } from 'motion/react'
 import { skillCategories } from './SkillList'
-import TornadoHelix from './TornadoHelix'
-import SkillListView from './SkillListView'
+import { SkillIcon } from './SkillIcons'
 import SectionHeader from '../SectionHeader'
-import { motion, AnimatePresence } from 'motion/react'
+import Panel from '../Panel'
+import { player } from '../../game/player'
 
-function TornadoIcon({ className = 'size-3.5' }) {
+function SkillNode({ name, tone, index }) {
     return (
-        <svg
-            className={className}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
+        <motion.li
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.35, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
+            className="group relative flex items-center gap-4"
         >
-            <path d="M21 4H3" />
-            <path d="M19 8H5" />
-            <path d="M17 12H7" />
-            <path d="M15 16H9" />
-            <path d="M13 20h-2" />
-        </svg>
-    )
-}
-
-function ListIcon({ className = 'size-3.5' }) {
-    return (
-        <svg
-            className={className}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-        >
-            <line x1="8" y1="6" x2="21" y2="6" />
-            <line x1="8" y1="12" x2="21" y2="12" />
-            <line x1="8" y1="18" x2="21" y2="18" />
-            <line x1="3" y1="6" x2="3.01" y2="6" />
-            <line x1="3" y1="12" x2="3.01" y2="12" />
-            <line x1="3" y1="18" x2="3.01" y2="18" />
-        </svg>
+            <span
+                className={`relative z-10 grid size-14 shrink-0 place-items-center rounded-md border-2 ${tone.border} bg-radial from-[#fbf3dc] to-[#cdb88a] shadow-[0_0_0_3px_var(--color-panel),inset_0_0_10px_rgb(0_0_0/0.25)] transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:scale-105`}
+            >
+                <SkillIcon name={name} className="size-8" />
+                <span
+                    aria-hidden="true"
+                    className={`absolute inset-0 -z-10 rounded-md ${tone.bg} opacity-0 blur-md transition-opacity duration-200 group-hover:opacity-60`}
+                />
+            </span>
+            <span className="flex min-w-0 flex-col">
+                <span className="font-medium leading-tight text-ink">{name}</span>
+                <span className={`font-pixel text-[10px] uppercase tracking-widest ${tone.text}`}>Learned</span>
+            </span>
+        </motion.li>
     )
 }
 
 function Skills() {
-    // Tornado helix is the default view as requested
-    const [viewMode, setViewMode] = useState('tornado')
-    const [activeStrand, setActiveStrand] = useState(null)
-
     return (
-        <section id="skills" className="relative w-full bg-transparent px-6 py-20 md:py-28">
-            <div className="mx-auto w-full max-w-5xl">
+        <section id="skills" data-zone="The Skill Grove" className="relative w-full px-4 py-24 sm:px-6 md:py-32">
+            <div className="mx-auto w-full max-w-6xl">
                 <SectionHeader
-                    tag="Capabilities"
-                    title="Technical Expertise"
+                    tag="Chapter II"
+                    title="Skill Tree"
                     aside={
-                        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-                            {/* Primary Interface Switcher: 3D Tornado vs Normal List */}
-                            <div
-                                role="tablist"
-                                aria-label="Skill display interface"
-                                className="flex items-center gap-1 self-start rounded-full border border-[#EAEAEA] bg-[#F7F6F3] p-1 dark:border-[#27272A] dark:bg-[#18181A] sm:self-auto"
-                            >
-                                <button
-                                    type="button"
-                                    id="tab-tornado"
-                                    role="tab"
-                                    aria-selected={viewMode === 'tornado'}
-                                    aria-controls="skills-display-panel"
-                                    onClick={() => setViewMode('tornado')}
-                                    className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[11px] font-medium transition-colors duration-150 active:scale-[0.98] ${
-                                        viewMode === 'tornado'
-                                            ? 'border border-[#EAEAEA] bg-white font-semibold text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
-                                            : 'text-[#71717A] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
-                                    }`}
-                                >
-                                    <TornadoIcon className="size-3.5" />
-                                    <span>3D Tornado</span>
-                                </button>
-                                <button
-                                    type="button"
-                                    id="tab-list"
-                                    role="tab"
-                                    aria-selected={viewMode === 'list'}
-                                    aria-controls="skills-display-panel"
-                                    onClick={() => setViewMode('list')}
-                                    className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[11px] font-medium transition-colors duration-150 active:scale-[0.98] ${
-                                        viewMode === 'list'
-                                            ? 'border border-[#EAEAEA] bg-white font-semibold text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
-                                            : 'text-[#71717A] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
-                                    }`}
-                                >
-                                    <ListIcon className="size-3.5" />
-                                    <span>Normal List</span>
-                                </button>
-                            </div>
-
-                            {/* Strand Filter (only relevant when in 3D Tornado mode) */}
-                            {viewMode === 'tornado' && (
-                                <div
-                                    role="group"
-                                    aria-label="Filter by helix strand"
-                                    className="flex items-center gap-1.5 self-start rounded-full border border-[#EAEAEA] bg-[#F7F6F3] p-1 dark:border-[#27272A] dark:bg-[#18181A] sm:self-auto"
-                                >
-                                    <button
-                                        type="button"
-                                        onClick={() => setActiveStrand(null)}
-                                        className={`rounded-full px-2.5 py-1 font-mono text-[11px] font-medium transition-colors duration-150 ${
-                                            activeStrand === null
-                                                ? 'border border-[#EAEAEA] bg-white text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
-                                                : 'text-[#71717A] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
-                                        }`}
-                                    >
-                                        All Strands
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => setActiveStrand(activeStrand === 'α' ? null : 'α')}
-                                        className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-mono text-[11px] font-medium transition-colors duration-150 ${
-                                            activeStrand === 'α'
-                                                ? 'border border-[#EAEAEA] bg-white text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
-                                                : 'text-[#71717A] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
-                                        }`}
-                                    >
-                                        <span className="size-1.5 rounded-full bg-[#1F6C9F]" />
-                                        Strand α
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => setActiveStrand(activeStrand === 'β' ? null : 'β')}
-                                        className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-mono text-[11px] font-medium transition-colors duration-150 ${
-                                            activeStrand === 'β'
-                                                ? 'border border-[#EAEAEA] bg-white text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
-                                                : 'text-[#71717A] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
-                                        }`}
-                                    >
-                                        <span className="size-1.5 rounded-full bg-[#346538]" />
-                                        Strand β
-                                    </button>
-                                </div>
-                            )}
-                        </div>
+                        <p className="self-start rounded-sm border-2 border-gold-dim bg-panel/80 px-3 py-2 font-pixel text-xs text-ink-soft backdrop-blur-sm md:self-auto">
+                            <span className="text-gold">{player.skills}</span> skills across{' '}
+                            <span className="text-gold">{player.schools}</span> schools
+                        </p>
                     }
-                />
-
-                {/* Main Dynamic Container: 3D Tornado Helix OR Normal Categorized List */}
-                <div
-                    id="skills-display-panel"
-                    role="tabpanel"
-                    aria-labelledby={viewMode === 'tornado' ? 'tab-tornado' : 'tab-list'}
-                    className="overflow-hidden rounded-[10px] border border-[#EAEAEA] bg-white dark:border-[#27272A] dark:bg-[#111112]"
                 >
-                    <AnimatePresence mode="wait">
-                        {viewMode === 'tornado' ? (
-                            <motion.div
-                                key="tornado"
-                                initial={{ opacity: 0, y: 8 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -8 }}
-                                transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                            >
-                                <TornadoHelix
-                                    activeStrand={activeStrand}
-                                    onSwitchToList={() => setViewMode('list')}
-                                />
-                            </motion.div>
-                        ) : (
-                            <motion.div
-                                key="list"
-                                initial={{ opacity: 0, y: 8 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -8 }}
-                                transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                            >
-                                <SkillListView
-                                    onSwitchToTornado={() => setViewMode('tornado')}
-                                />
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </div>
+                    Three schools of study. Each skill below was learned along the way.
+                </SectionHeader>
 
-                {/* Accessible Content for Assistive Tech */}
-                <div className="sr-only">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {skillCategories.map((cat) => (
-                        <div key={cat.id}>
-                            <h3>{cat.title}</h3>
-                            <ul>
-                                {cat.skills.map((s) => (
-                                    <li key={`${cat.id}-${s}`}>{s}</li>
+                        <Panel as="article" key={cat.id} className="flex flex-col p-5 sm:p-6">
+                            <header className="mb-6 flex items-start gap-4 border-b border-line pb-5">
+                                <span
+                                    aria-hidden="true"
+                                    className={`grid size-12 shrink-0 place-items-center rounded-full border-2 ${cat.tone.border} bg-void/50 text-2xl ${cat.tone.text} shadow-[0_0_24px_-4px_currentColor]`}
+                                >
+                                    {cat.glyph}
+                                </span>
+                                <div>
+                                    <p className={`font-pixel text-[11px] uppercase tracking-widest ${cat.tone.text}`}>{cat.school}</p>
+                                    <h3 className="font-display text-lg font-bold leading-snug tracking-wide text-ink">{cat.title}</h3>
+                                    <p className="mt-1 text-sm leading-snug text-muted">{cat.description}</p>
+                                </div>
+                            </header>
+
+                            <ol className="relative flex flex-col gap-4">
+                                {/* Talent-tree spine connecting the nodes */}
+                                <span aria-hidden="true" className={`absolute top-4 bottom-4 left-[27px] w-0.5 ${cat.tone.bg} opacity-40`} />
+                                {cat.skills.map((skill, i) => (
+                                    <SkillNode key={`${cat.id}-${skill}`} name={skill} tone={cat.tone} index={i} />
                                 ))}
-                            </ul>
-                        </div>
+                            </ol>
+                        </Panel>
                     ))}
                 </div>
             </div>

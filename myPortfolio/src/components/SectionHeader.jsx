@@ -1,16 +1,18 @@
 function SectionHeader({ tag, title, children, aside }) {
     return (
-        <div className="mb-8 flex flex-col gap-4 md:mb-12 md:flex-row md:items-end md:justify-between md:gap-6">
+        <div className="mb-10 flex flex-col gap-5 md:mb-14 md:flex-row md:items-end md:justify-between md:gap-8">
             <div>
                 {tag && (
-                    <span className="mb-2 inline-block font-mono text-xs font-semibold uppercase tracking-wider text-[#71717A] dark:text-[#A1A1AA]">
+                    <span className="mb-3 flex items-center gap-2 font-pixel text-xs uppercase tracking-[0.25em] text-gold">
+                        <span aria-hidden="true" className="size-1.5 rotate-45 bg-gold" />
                         {tag}
+                        <span aria-hidden="true" className="h-px w-10 bg-linear-to-r from-gold to-transparent" />
                     </span>
                 )}
-                <h2 className="font-sans text-2xl sm:text-3xl font-semibold leading-tight tracking-[-0.03em] text-balance text-[#111111] dark:text-[#FBFBFA] md:text-4xl">
+                <h2 className="font-display text-3xl font-bold leading-tight tracking-wide text-balance text-ink drop-shadow-[0_2px_12px_rgb(0_0_0/0.35)] sm:text-4xl md:text-5xl">
                     {title}
                 </h2>
-                {children && <p className="mt-2 max-w-[620px] text-sm leading-relaxed text-[#71717A] dark:text-[#A1A1AA]">{children}</p>}
+                {children && <p className="mt-3 max-w-[620px] leading-relaxed text-ink-soft">{children}</p>}
             </div>
             {aside}
         </div>
