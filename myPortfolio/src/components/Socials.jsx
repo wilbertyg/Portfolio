@@ -11,10 +11,10 @@ function Socials({ showLabels = false, className = '' }) {
     }
 
     const buttonClass =
-        'inline-flex size-9 items-center justify-center gap-2 rounded-[6px] border border-[#EAEAEA] bg-white text-[#71717A] transition-all duration-150 hover:border-[#111111] hover:bg-[#F7F6F3] hover:text-[#111111] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#111111] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#A1A1AA] dark:hover:border-[#FBFBFA] dark:hover:bg-[#222225] dark:hover:text-[#FBFBFA] dark:focus-visible:ring-[#FBFBFA]'
+        'inline-flex size-10 items-center justify-center gap-2 rounded-full border border-black/10 bg-white/50 text-[#57534E] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[#7C3AED]/50 hover:text-[#0B0B0F] hover:shadow-[0_6px_20px_-6px_rgba(124,58,237,0.5)] active:scale-[0.95] dark:border-white/10 dark:bg-white/[0.04] dark:text-[#A1A1AA] dark:hover:border-[#A78BFA]/50 dark:hover:text-[#F4F4F5] dark:hover:shadow-[0_6px_24px_-6px_rgba(167,139,250,0.6)]'
 
     return (
-        <div className={`inline-flex items-center gap-1.5 ${className}`}>
+        <div className={`inline-flex items-center gap-2 ${className}`}>
             <a
                 href="https://github.com/wilbertyg"
                 target="_blank"

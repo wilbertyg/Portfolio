@@ -1,204 +1,98 @@
-import { useState } from 'react'
+import { motion } from 'motion/react'
 import { skillCategories } from './SkillList'
-import TornadoHelix from './TornadoHelix'
-import SkillListView from './SkillListView'
+import { SkillIcon } from './SkillIcons'
 import SectionHeader from '../SectionHeader'
-import { motion, AnimatePresence } from 'motion/react'
+import { CountUp, EASE, SpotlightLayer, useSpotlight } from '../fx'
+import { ProjectList } from '../Projects/ProjectList'
+import { RelatedList } from '../Related/RelatedList'
 
-function TornadoIcon({ className = 'size-3.5' }) {
-    return (
-        <svg
-            className={className}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-        >
-            <path d="M21 4H3" />
-            <path d="M19 8H5" />
-            <path d="M17 12H7" />
-            <path d="M15 16H9" />
-            <path d="M13 20h-2" />
-        </svg>
-    )
-}
+const totalSkills = new Set(skillCategories.flatMap((c) => c.skills)).size
 
-function ListIcon({ className = 'size-3.5' }) {
+const stats = [
+    { label: 'Technologies', value: totalSkills },
+    { label: 'Projects', value: ProjectList.length },
+    { label: 'Credentials', value: RelatedList.length },
+]
+
+// The first category is the headline card: it spans two columns and both rows on desktop.
+const layout = ['md:col-span-2 md:row-span-2', 'md:col-span-1', 'md:col-span-1']
+
+function CategoryCard({ cat, index }) {
+    const onMove = useSpotlight()
+    const featured = index === 0
     return (
-        <svg
-            className={className}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
+        <motion.article
+            onPointerMove={onMove}
+            initial={{ opacity: 0, y: 40, scale: 0.97 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.9, ease: EASE, delay: index * 0.12 }}
+            className={`group relative flex flex-col overflow-hidden rounded-[28px] border border-black/10 bg-white/55 p-6 backdrop-blur-xl transition-colors duration-500 hover:border-black/20 sm:p-8 dark:border-white/10 dark:bg-white/[0.035] dark:hover:border-white/20 ${layout[index]}`}
         >
-            <line x1="8" y1="6" x2="21" y2="6" />
-            <line x1="8" y1="12" x2="21" y2="12" />
-            <line x1="8" y1="18" x2="21" y2="18" />
-            <line x1="3" y1="6" x2="3.01" y2="6" />
-            <line x1="3" y1="12" x2="3.01" y2="12" />
-            <line x1="3" y1="18" x2="3.01" y2="18" />
-        </svg>
+            <SpotlightLayer />
+            <header className="relative flex items-start justify-between gap-4">
+                <div>
+                    <div className="mb-3 flex items-center gap-2.5">
+                        <span className={`size-2 rounded-full ${cat.dot}`} />
+                        <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#78716C] dark:text-[#71717A]">
+                            0{index + 1} / {cat.skills.length} tools
+                        </span>
+                    </div>
+                    <h3 className={`font-semibold tracking-[-0.035em] text-[#0B0B0F] dark:text-[#F4F4F5] ${featured ? 'text-2xl sm:text-3xl' : 'text-xl'}`}>
+                        {cat.title}
+                    </h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-[#57534E] dark:text-[#A1A1AA]">{cat.description}</p>
+                </div>
+            </header>
+
+            <ul className={`relative mt-8 grid gap-2.5 ${featured ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-2'}`}>
+                {cat.skills.map((skill, i) => (
+                    <motion.li
+                        key={skill}
+                        initial={{ opacity: 0, y: 14 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, ease: EASE, delay: 0.25 + index * 0.1 + i * 0.04 }}
+                        className="group/skill flex items-center gap-3 rounded-2xl border border-black/[0.06] bg-white/60 p-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#7C3AED]/40 hover:bg-white hover:shadow-[0_10px_30px_-12px_rgba(124,58,237,0.45)] dark:border-white/[0.06] dark:bg-white/[0.03] dark:hover:border-[#A78BFA]/40 dark:hover:bg-white/[0.07] dark:hover:shadow-[0_10px_30px_-12px_rgba(167,139,250,0.5)]"
+                    >
+                        <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-500 group-hover/skill:rotate-[8deg] group-hover/skill:scale-110">
+                            <SkillIcon name={skill} className="size-5" />
+                        </span>
+                        <span className="min-w-0 text-sm leading-tight font-medium tracking-tight text-[#0B0B0F] dark:text-[#F4F4F5]">{skill}</span>
+                    </motion.li>
+                ))}
+            </ul>
+        </motion.article>
     )
 }
 
 function Skills() {
-    // Tornado helix is the default view as requested
-    const [viewMode, setViewMode] = useState('tornado')
-    const [activeStrand, setActiveStrand] = useState(null)
-
     return (
-        <section id="skills" className="relative w-full bg-transparent px-6 py-20 md:py-28">
-            <div className="mx-auto w-full max-w-5xl">
-                <SectionHeader
-                    tag="Capabilities"
-                    title="Technical Expertise"
-                    aside={
-                        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-                            {/* Primary Interface Switcher: 3D Tornado vs Normal List */}
-                            <div
-                                role="tablist"
-                                aria-label="Skill display interface"
-                                className="flex items-center gap-1 self-start rounded-full border border-[#EAEAEA] bg-[#F7F6F3] p-1 dark:border-[#27272A] dark:bg-[#18181A] sm:self-auto"
-                            >
-                                <button
-                                    type="button"
-                                    id="tab-tornado"
-                                    role="tab"
-                                    aria-selected={viewMode === 'tornado'}
-                                    aria-controls="skills-display-panel"
-                                    onClick={() => setViewMode('tornado')}
-                                    className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[11px] font-medium transition-colors duration-150 active:scale-[0.98] ${
-                                        viewMode === 'tornado'
-                                            ? 'border border-[#EAEAEA] bg-white font-semibold text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
-                                            : 'text-[#71717A] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
-                                    }`}
-                                >
-                                    <TornadoIcon className="size-3.5" />
-                                    <span>3D Tornado</span>
-                                </button>
-                                <button
-                                    type="button"
-                                    id="tab-list"
-                                    role="tab"
-                                    aria-selected={viewMode === 'list'}
-                                    aria-controls="skills-display-panel"
-                                    onClick={() => setViewMode('list')}
-                                    className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[11px] font-medium transition-colors duration-150 active:scale-[0.98] ${
-                                        viewMode === 'list'
-                                            ? 'border border-[#EAEAEA] bg-white font-semibold text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
-                                            : 'text-[#71717A] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
-                                    }`}
-                                >
-                                    <ListIcon className="size-3.5" />
-                                    <span>Normal List</span>
-                                </button>
+        <section id="skills" className="relative mx-auto w-full max-w-6xl px-6 py-24 md:py-36">
+            <SectionHeader
+                index="01"
+                tag="Capabilities"
+                title="Technical Expertise"
+                aside={
+                    <dl className="flex gap-8 sm:gap-10">
+                        {stats.map((s) => (
+                            <div key={s.label} className="flex flex-col-reverse">
+                                <dt className="mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-[#78716C] dark:text-[#71717A]">{s.label}</dt>
+                                <dd className="bg-gradient-to-b from-[#0B0B0F] to-[#0B0B0F]/50 bg-clip-text text-5xl font-semibold tracking-[-0.05em] text-transparent tabular-nums dark:from-white dark:to-white/40">
+                                    <CountUp value={s.value} />
+                                </dd>
                             </div>
+                        ))}
+                    </dl>
+                }
+            >
+                From research notebooks to production pipelines — the languages, frameworks and tools I reach for.
+            </SectionHeader>
 
-                            {/* Strand Filter (only relevant when in 3D Tornado mode) */}
-                            {viewMode === 'tornado' && (
-                                <div
-                                    role="group"
-                                    aria-label="Filter by helix strand"
-                                    className="flex items-center gap-1.5 self-start rounded-full border border-[#EAEAEA] bg-[#F7F6F3] p-1 dark:border-[#27272A] dark:bg-[#18181A] sm:self-auto"
-                                >
-                                    <button
-                                        type="button"
-                                        onClick={() => setActiveStrand(null)}
-                                        className={`rounded-full px-2.5 py-1 font-mono text-[11px] font-medium transition-colors duration-150 ${
-                                            activeStrand === null
-                                                ? 'border border-[#EAEAEA] bg-white text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
-                                                : 'text-[#71717A] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
-                                        }`}
-                                    >
-                                        All Strands
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => setActiveStrand(activeStrand === 'α' ? null : 'α')}
-                                        className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-mono text-[11px] font-medium transition-colors duration-150 ${
-                                            activeStrand === 'α'
-                                                ? 'border border-[#EAEAEA] bg-white text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
-                                                : 'text-[#71717A] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
-                                        }`}
-                                    >
-                                        <span className="size-1.5 rounded-full bg-[#1F6C9F]" />
-                                        Strand α
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => setActiveStrand(activeStrand === 'β' ? null : 'β')}
-                                        className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-mono text-[11px] font-medium transition-colors duration-150 ${
-                                            activeStrand === 'β'
-                                                ? 'border border-[#EAEAEA] bg-white text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
-                                                : 'text-[#71717A] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
-                                        }`}
-                                    >
-                                        <span className="size-1.5 rounded-full bg-[#346538]" />
-                                        Strand β
-                                    </button>
-                                </div>
-                            )}
-                        </div>
-                    }
-                />
-
-                {/* Main Dynamic Container: 3D Tornado Helix OR Normal Categorized List */}
-                <div
-                    id="skills-display-panel"
-                    role="tabpanel"
-                    aria-labelledby={viewMode === 'tornado' ? 'tab-tornado' : 'tab-list'}
-                    className="overflow-hidden rounded-[10px] border border-[#EAEAEA] bg-white dark:border-[#27272A] dark:bg-[#111112]"
-                >
-                    <AnimatePresence mode="wait">
-                        {viewMode === 'tornado' ? (
-                            <motion.div
-                                key="tornado"
-                                initial={{ opacity: 0, y: 8 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -8 }}
-                                transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                            >
-                                <TornadoHelix
-                                    activeStrand={activeStrand}
-                                    onSwitchToList={() => setViewMode('list')}
-                                />
-                            </motion.div>
-                        ) : (
-                            <motion.div
-                                key="list"
-                                initial={{ opacity: 0, y: 8 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -8 }}
-                                transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                            >
-                                <SkillListView
-                                    onSwitchToTornado={() => setViewMode('tornado')}
-                                />
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </div>
-
-                {/* Accessible Content for Assistive Tech */}
-                <div className="sr-only">
-                    {skillCategories.map((cat) => (
-                        <div key={cat.id}>
-                            <h3>{cat.title}</h3>
-                            <ul>
-                                {cat.skills.map((s) => (
-                                    <li key={`${cat.id}-${s}`}>{s}</li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
-                </div>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-5">
+                {skillCategories.map((cat, i) => (
+                    <CategoryCard key={cat.id} cat={cat} index={i} />
+                ))}
             </div>
         </section>
     )

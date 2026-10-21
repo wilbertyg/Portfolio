@@ -1,19 +1,19 @@
 const base =
-    'inline-flex items-center justify-center gap-2 whitespace-nowrap border font-medium leading-none transition-all duration-150 ease-out aria-disabled:pointer-events-none aria-disabled:opacity-50'
+    'group/btn relative inline-flex items-center justify-center gap-2 overflow-hidden whitespace-nowrap rounded-full font-medium leading-none transition-[transform,background-color,border-color,color,box-shadow] duration-300 ease-out active:scale-[0.97] aria-disabled:pointer-events-none aria-disabled:opacity-50'
 
 const variants = {
     primary:
-        'border-[#111111] bg-[#111111] text-white hover:bg-[#2A2A2A] active:scale-[0.98] dark:border-[#FBFBFA] dark:bg-[#FBFBFA] dark:text-[#111111] dark:hover:bg-[#E5E5E5]',
+        'bg-[#0B0B0F] text-white shadow-[0_8px_30px_-8px_rgba(124,58,237,0.55)] hover:shadow-[0_12px_40px_-6px_rgba(124,58,237,0.7)] dark:bg-[#F4F4F5] dark:text-[#0B0B0F] dark:shadow-[0_8px_30px_-8px_rgba(167,139,250,0.6)] dark:hover:shadow-[0_12px_44px_-6px_rgba(167,139,250,0.8)]',
     secondary:
-        'border-[#EAEAEA] bg-white text-[#111111] hover:border-[#111111] hover:bg-[#F7F6F3] active:scale-[0.98] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#FBFBFA] dark:hover:border-[#3F3F46] dark:hover:bg-[#222225]',
+        'border border-black/10 bg-white/50 text-[#0B0B0F] backdrop-blur-md hover:border-black/25 hover:bg-white/80 dark:border-white/12 dark:bg-white/[0.04] dark:text-[#F4F4F5] dark:hover:border-white/30 dark:hover:bg-white/[0.08]',
     ghost:
-        'border-transparent bg-transparent text-[#787774] hover:bg-[#F7F6F3] hover:text-[#111111] active:scale-[0.98] dark:text-[#A1A1AA] dark:hover:bg-[#18181A] dark:hover:text-[#FBFBFA]',
+        'text-[#57534E] hover:text-[#0B0B0F] dark:text-[#A1A1AA] dark:hover:text-[#F4F4F5]',
 }
 
 const sizes = {
-    sm: 'px-3 py-1.5 text-xs rounded-[4px]',
-    md: 'px-4 py-2.5 text-xs font-semibold rounded-[6px]',
-    lg: 'px-5 py-3 text-sm font-semibold rounded-[6px]',
+    sm: 'px-3.5 py-2 text-xs',
+    md: 'px-5 py-3 text-sm',
+    lg: 'px-7 py-4 text-sm font-semibold',
 }
 
 /** Renders an <a> when given href, otherwise a <button>. Never nest it inside a link. */
@@ -32,8 +32,14 @@ function Button({
     const classes = `${base} ${variants[variant] || variants.primary} ${sizes[size] || sizes.md} ${className}`
     const content = (
         <>
-            {icon && <span className="inline-flex items-center shrink-0">{icon}</span>}
-            <span>{text || children}</span>
+            {variant === 'primary' && (
+                <span
+                    aria-hidden="true"
+                    className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 ease-out group-hover/btn:translate-x-full dark:via-[#A78BFA]/30"
+                />
+            )}
+            {icon && <span className="relative inline-flex shrink-0 items-center">{icon}</span>}
+            <span className="relative">{text || children}</span>
         </>
     )
 

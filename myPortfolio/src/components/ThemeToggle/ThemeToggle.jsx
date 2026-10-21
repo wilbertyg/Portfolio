@@ -51,13 +51,13 @@ function ThemeToggle({ className = '', showLabel = false }) {
             onClick={toggleTheme}
             aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
             title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-            className={`inline-flex items-center justify-center gap-2 rounded-[6px] border border-[#EAEAEA] bg-white p-2 text-xs font-medium text-[#111111] transition-all duration-150 hover:border-[#111111] hover:bg-[#F7F6F3] active:scale-[0.96] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#FBFBFA] dark:hover:border-[#3F3F46] dark:hover:bg-[#222225] ${className}`}
+            className={`group inline-flex size-9 items-center justify-center gap-2 rounded-full text-xs font-medium text-[#0B0B0F] transition-all duration-300 hover:bg-black/5 active:scale-[0.92] dark:text-[#F4F4F5] dark:hover:bg-white/10 ${className}`}
         >
-            <span className="relative flex size-4 items-center justify-center transition-transform duration-200">
+            <span className="relative flex size-4 items-center justify-center transition-transform duration-500 group-hover:rotate-[30deg]">
                 {isDark ? (
-                    <SunIcon className="size-4 text-[#FBFBFA] transition-transform duration-200 rotate-0 hover:rotate-45" />
+                    <SunIcon className="size-4" />
                 ) : (
-                    <MoonIcon className="size-4 text-[#111111] transition-transform duration-200 rotate-0 hover:-rotate-12" />
+                    <MoonIcon className="size-4" />
                 )}
             </span>
             {showLabel && (

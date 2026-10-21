@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react'
 import CV from '../../assets/CV_Wilbert Yang.pdf'
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
+import { EASE } from '../fx'
 
 const navItems = [
     { label: 'About', id: 'about' },
     { label: 'Skills', id: 'skills' },
     { label: 'Projects', id: 'projects' },
     { label: 'Certifications', id: 'certifications' },
+    { label: 'Contact', id: 'contact' },
 ]
 
 function DownloadIcon() {
@@ -20,18 +22,33 @@ function DownloadIcon() {
     )
 }
 
+function Logo() {
+    return (
+        <a href="#about" className="group flex items-center gap-2.5 rounded-full pr-2 text-sm font-semibold tracking-tight text-[#0B0B0F] dark:text-[#F4F4F5]">
+            <span className="relative grid size-8 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-[#0891B2] via-[#7C3AED] to-[#DB2777] text-xs font-bold text-white transition-transform duration-500 group-hover:rotate-[360deg] dark:from-[#67E8F9] dark:via-[#A78BFA] dark:to-[#F472B6] dark:text-[#05050A]">
+                W
+            </span>
+            <span className="hidden sm:inline">Wilbert Yang</span>
+        </a>
+    )
+}
+
 function Navbar() {
     const [activeSection, setActiveSection] = useState('about')
     const [scrolled, setScrolled] = useState(false)
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const { scrollYProgress } = useScroll()
+    const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30, restDelta: 0.001 })
 
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 20)
-            const scrollPos = window.scrollY + 120
+            const scrollPos = window.scrollY + window.innerHeight * 0.4
+            const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4
+            if (atBottom) return setActiveSection(navItems[navItems.length - 1].id)
             for (let i = navItems.length - 1; i >= 0; i--) {
                 const section = document.getElementById(navItems[i].id)
-                if (section && section.offsetTop <= scrollPos) {
+                if (section && section.getBoundingClientRect().top + window.scrollY <= scrollPos) {
                     setActiveSection(navItems[i].id)
                     break
                 }
@@ -53,113 +70,135 @@ function Navbar() {
         }
     }, [mobileMenuOpen])
 
+    useEffect(() => {
+        document.body.style.overflow = mobileMenuOpen ? 'hidden' : ''
+        return () => {
+            document.body.style.overflow = ''
+        }
+    }, [mobileMenuOpen])
+
     return (
-        <header
-            className={`fixed inset-x-0 top-0 z-50 border-b border-[#EAEAEA] backdrop-blur-md transition-colors duration-200 dark:border-[#27272A] ${
-                scrolled
-                    ? 'bg-white/95 dark:bg-[#111112]/95'
-                    : 'bg-[#FBFBFA]/90 dark:bg-[#111112]/90'
-            }`}
-        >
+        <header className="fixed inset-x-0 top-0 z-50">
+            <motion.div
+                aria-hidden="true"
+                style={{ scaleX: progress }}
+                className="absolute inset-x-0 top-0 h-[2px] origin-left bg-gradient-to-r from-[#0891B2] via-[#7C3AED] to-[#DB2777] dark:from-[#67E8F9] dark:via-[#A78BFA] dark:to-[#F472B6]"
+            />
             <a
                 href="#main-content"
-                className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-xs focus:font-semibold focus:text-[#111111] focus:shadow-md focus:ring-2 focus:ring-[#111111] dark:focus:bg-[#18181A] dark:focus:text-[#FBFBFA] dark:focus:ring-[#FBFBFA]"
+                className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-xs focus:font-semibold focus:text-[#0B0B0F] focus:shadow-md dark:focus:bg-[#111118] dark:focus:text-[#F4F4F5]"
             >
                 Skip to main content
             </a>
-            <nav className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6" aria-label="Main">
-                <a href="#about" className="flex items-center gap-2.5 text-base font-semibold tracking-tight text-[#111111] dark:text-[#FBFBFA]">
-                    <span>Wilbert Yang</span>
-                </a>
 
-                <div className="hidden items-center gap-1 rounded-full border border-[#EAEAEA] bg-[#F7F6F3] p-1 dark:border-[#27272A] dark:bg-[#18181A] md:flex">
+            <motion.nav
+                aria-label="Main"
+                initial={{ y: -30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, ease: EASE, delay: 0.2 }}
+                className={`mx-4 mt-4 flex items-center justify-between gap-2 rounded-full border p-1.5 backdrop-blur-xl transition-[background-color,border-color,box-shadow] duration-500 sm:mx-auto sm:max-w-fit ${
+                    scrolled || mobileMenuOpen
+                        ? 'border-black/10 bg-[#F4F3EF]/75 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.25)] dark:border-white/10 dark:bg-[#0A0A12]/70 dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)]'
+                        : 'border-transparent bg-transparent'
+                }`}
+            >
+                <Logo />
+
+                <ul className="hidden items-center md:flex">
                     {navItems.map((item) => {
                         const isActive = activeSection === item.id
                         return (
-                            <a
-                                key={item.id}
-                                href={`#${item.id}`}
-                                aria-current={isActive ? 'true' : undefined}
-                                className={`rounded-full px-3.5 py-1 text-xs transition-colors duration-150 ${
-                                    isActive
-                                        ? 'border border-[#EAEAEA] bg-white font-semibold text-[#111111] dark:border-[#2E2E32] dark:bg-[#222225] dark:text-[#FBFBFA]'
-                                        : 'font-medium text-[#787774] hover:text-[#111111] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]'
-                                }`}
-                            >
-                                {item.label}
-                            </a>
+                            <li key={item.id}>
+                                <a
+                                    href={`#${item.id}`}
+                                    aria-current={isActive ? 'true' : undefined}
+                                    className={`relative block rounded-full px-3.5 py-2 text-xs font-medium transition-colors duration-300 ${
+                                        isActive
+                                            ? 'text-[#0B0B0F] dark:text-[#F4F4F5]'
+                                            : 'text-[#57534E] hover:text-[#0B0B0F] dark:text-[#A1A1AA] dark:hover:text-[#F4F4F5]'
+                                    }`}
+                                >
+                                    {isActive && (
+                                        <motion.span
+                                            layoutId="navActive"
+                                            className="absolute inset-0 rounded-full bg-black/[0.06] dark:bg-white/[0.09]"
+                                            transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                                        />
+                                    )}
+                                    <span className="relative">{item.label}</span>
+                                </a>
+                            </li>
                         )
                     })}
-                </div>
+                </ul>
 
-                <div className="hidden items-center gap-2 md:flex">
+                <div className="flex items-center gap-1">
                     <ThemeToggle />
                     <a
                         href={CV}
                         download
-                        className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#EAEAEA] bg-white px-3 py-1.5 text-xs font-semibold text-[#111111] transition-all hover:border-[#111111] hover:bg-[#F7F6F3] active:scale-[0.98] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#FBFBFA] dark:hover:border-[#3F3F46] dark:hover:bg-[#222225]"
+                        className="hidden items-center gap-1.5 rounded-full bg-[#0B0B0F] px-4 py-2 text-xs font-semibold text-white transition-transform duration-300 hover:scale-[1.04] active:scale-[0.97] dark:bg-[#F4F4F5] dark:text-[#0B0B0F] md:inline-flex"
                     >
                         <DownloadIcon />
                         <span>CV</span>
                     </a>
-                </div>
-
-                <div className="flex items-center gap-1.5 md:hidden">
-                    <ThemeToggle />
                     <button
                         type="button"
-                        className="flex items-center justify-center rounded-[6px] p-2 text-[#111111] transition-colors hover:bg-[#F7F6F3] dark:text-[#FBFBFA] dark:hover:bg-[#18181A]"
+                        className="grid size-9 place-items-center rounded-full text-[#0B0B0F] transition-colors hover:bg-black/5 dark:text-[#F4F4F5] dark:hover:bg-white/10 md:hidden"
                         onClick={() => setMobileMenuOpen((open) => !open)}
                         aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
                         aria-expanded={mobileMenuOpen}
                         aria-controls="mobile-menu"
                     >
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                            {mobileMenuOpen ? (
-                                <>
-                                    <line x1="18" y1="6" x2="6" y2="18" />
-                                    <line x1="6" y1="6" x2="18" y2="18" />
-                                </>
-                            ) : (
-                                <>
-                                    <line x1="4" y1="7" x2="20" y2="7" />
-                                    <line x1="4" y1="12" x2="20" y2="12" />
-                                    <line x1="4" y1="17" x2="20" y2="17" />
-                                </>
-                            )}
-                        </svg>
+                        <span className="relative block h-3 w-5" aria-hidden="true">
+                            <span className={`absolute left-0 h-[1.5px] w-5 rounded bg-current transition-all duration-300 ${mobileMenuOpen ? 'top-1/2 rotate-45' : 'top-0'}`} />
+                            <span className={`absolute left-0 h-[1.5px] w-5 rounded bg-current transition-all duration-300 ${mobileMenuOpen ? 'top-1/2 -rotate-45' : 'top-full'}`} />
+                        </span>
                     </button>
                 </div>
-            </nav>
+            </motion.nav>
 
             <AnimatePresence>
                 {mobileMenuOpen && (
                     <motion.div
                         id="mobile-menu"
-                        initial={{ opacity: 0, y: -8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -8 }}
-                        transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-                        className="flex flex-col gap-2 border-b border-[#EAEAEA] bg-white px-6 pt-4 pb-6 dark:border-[#27272A] dark:bg-[#18181A] md:hidden"
+                        initial={{ clipPath: 'circle(0% at 100% 0%)' }}
+                        animate={{ clipPath: 'circle(150% at 100% 0%)' }}
+                        exit={{ clipPath: 'circle(0% at 100% 0%)' }}
+                        transition={{ duration: 0.7, ease: EASE }}
+                        className="fixed inset-0 -z-10 flex flex-col justify-between bg-[#F4F3EF]/95 px-6 pt-28 pb-10 backdrop-blur-2xl dark:bg-[#05050A]/95 md:hidden"
                     >
-                        {navItems.map((item) => (
-                            <a
-                                key={item.id}
-                                href={`#${item.id}`}
-                                className="border-b border-[#EAEAEA] py-2.5 text-sm font-medium text-[#787774] last-of-type:border-b-0 hover:text-[#111111] dark:border-[#27272A] dark:text-[#A1A1AA] dark:hover:text-[#FBFBFA]"
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
-                                {item.label}
-                            </a>
-                        ))}
-                        <a
+                        <ul className="flex flex-col gap-1">
+                            {navItems.map((item, i) => (
+                                <motion.li
+                                    key={item.id}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.6, ease: EASE, delay: 0.15 + i * 0.06 }}
+                                >
+                                    <a
+                                        href={`#${item.id}`}
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className="flex items-baseline gap-4 py-2 text-4xl font-semibold tracking-[-0.04em] text-[#0B0B0F] dark:text-[#F4F4F5]"
+                                    >
+                                        <span className="font-mono text-xs font-normal tracking-normal text-[#7C3AED] dark:text-[#C4B5FD]">0{i + 1}</span>
+                                        {item.label}
+                                    </a>
+                                </motion.li>
+                            ))}
+                        </ul>
+                        <motion.a
                             href={CV}
                             download
-                            className="mt-2 rounded-[6px] bg-[#111111] p-2.5 text-center text-xs font-semibold text-white active:scale-[0.98] dark:bg-[#FBFBFA] dark:text-[#111111]"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, ease: EASE, delay: 0.5 }}
                             onClick={() => setMobileMenuOpen(false)}
+                            className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0B0B0F] p-4 text-sm font-semibold text-white dark:bg-[#F4F4F5] dark:text-[#0B0B0F]"
                         >
+                            <DownloadIcon />
                             Download CV
-                        </a>
+                        </motion.a>
                     </motion.div>
                 )}
             </AnimatePresence>
