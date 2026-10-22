@@ -1,19 +1,21 @@
-const base =
-    'inline-flex items-center justify-center gap-2 whitespace-nowrap border font-medium leading-none transition-all duration-150 ease-out aria-disabled:pointer-events-none aria-disabled:opacity-50'
+import { playSfx } from '../Game/sfx'
 
+const base =
+    'group/btn inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-sm border-2 border-void font-display uppercase leading-none transition-transform duration-100 hover:-translate-y-0.5 active:translate-y-1 active:shadow-none aria-disabled:pointer-events-none aria-disabled:opacity-50'
+
+// Bevelled 16-bit buttons: light top-left edge, dark bottom-right edge, hard drop shadow.
 const variants = {
     primary:
-        'border-[#111111] bg-[#111111] text-white hover:bg-[#2A2A2A] active:scale-[0.98] dark:border-[#FBFBFA] dark:bg-[#FBFBFA] dark:text-[#111111] dark:hover:bg-[#E5E5E5]',
+        'bg-gold text-void shadow-[inset_-3px_-3px_0_#C88A18,inset_3px_3px_0_#FFF4C0,0_4px_0_var(--color-void)] focus-visible:outline-white',
     secondary:
-        'border-[#EAEAEA] bg-white text-[#111111] hover:border-[#111111] hover:bg-[#F7F6F3] active:scale-[0.98] dark:border-[#27272A] dark:bg-[#18181A] dark:text-[#FBFBFA] dark:hover:border-[#3F3F46] dark:hover:bg-[#222225]',
-    ghost:
-        'border-transparent bg-transparent text-[#787774] hover:bg-[#F7F6F3] hover:text-[#111111] active:scale-[0.98] dark:text-[#A1A1AA] dark:hover:bg-[#18181A] dark:hover:text-[#FBFBFA]',
+        'bg-win text-white shadow-[inset_-3px_-3px_0_var(--color-win-lo),inset_3px_3px_0_var(--color-win-hi),0_4px_0_var(--color-void)]',
+    ghost: 'border-transparent bg-transparent text-current hover:bg-white/10',
 }
 
 const sizes = {
-    sm: 'px-3 py-1.5 text-xs rounded-[4px]',
-    md: 'px-4 py-2.5 text-xs font-semibold rounded-[6px]',
-    lg: 'px-5 py-3 text-sm font-semibold rounded-[6px]',
+    sm: 'px-3 py-2 text-[9px]',
+    md: 'px-4 py-3 text-[10px]',
+    lg: 'px-5 py-4 text-xs',
 }
 
 /** Renders an <a> when given href, otherwise a <button>. Never nest it inside a link. */
@@ -27,26 +29,31 @@ function Button({
     href,
     type = 'button',
     className = '',
+    onClick,
     ...props
 }) {
     const classes = `${base} ${variants[variant] || variants.primary} ${sizes[size] || sizes.md} ${className}`
+    const handleClick = (e) => {
+        playSfx('confirm')
+        onClick?.(e)
+    }
     const content = (
         <>
-            {icon && <span className="inline-flex items-center shrink-0">{icon}</span>}
+            {icon && <span className="inline-flex shrink-0 items-center">{icon}</span>}
             <span>{text || children}</span>
         </>
     )
 
     if (href) {
         return (
-            <a href={enabled ? href : undefined} aria-disabled={!enabled || undefined} className={classes} {...props}>
+            <a href={enabled ? href : undefined} aria-disabled={!enabled || undefined} className={classes} onClick={handleClick} {...props}>
                 {content}
             </a>
         )
     }
 
     return (
-        <button type={type} disabled={!enabled} aria-disabled={!enabled || undefined} className={classes} {...props}>
+        <button type={type} disabled={!enabled} aria-disabled={!enabled || undefined} className={classes} onClick={handleClick} {...props}>
             {content}
         </button>
     )

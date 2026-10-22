@@ -19,69 +19,75 @@ const virtualTailwindPlugin = () => {
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: "Satoshi", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-serif: "Newsreader", "Instrument Serif", Georgia, serif;
-  --font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
+  --font-sans: "Pixelify Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Press Start 2P", ui-monospace, monospace;
 
-  /* Warm Monochrome Palette */
-  --color-canvas: #FBFBFA;
-  --color-surface: #FFFFFF;
-  --color-subtle: #F7F6F3;
-  --color-line: #EAEAEA;
-  --color-line-strong: #DCDCDA;
-  --color-ink: #111111;
-  --color-ink-soft: #2F3437;
-  --color-muted: #787774;
-  --color-faint: #A1A1A0;
-  --color-accent: #111111;
-  --color-accent-hover: #2A2A2A;
+  /* Day: old game-manual parchment */
+  --color-parch: #F3E2B8;
+  --color-parch-deep: #E6CC94;
+  --color-ink: #2B1A10;
+  --color-ink-soft: #5C3F28;
 
-  /* Muted Spot Pastels (Minimalist UI Directive) */
-  --color-pastel-red: #FDEBEC;
-  --color-pastel-red-ink: #9F2F2D;
-  --color-pastel-blue: #E1F3FE;
-  --color-pastel-blue-ink: #1F6C9F;
-  --color-pastel-green: #EDF3EC;
-  --color-pastel-green-ink: #346538;
-  --color-pastel-yellow: #FBF3DB;
-  --color-pastel-yellow-ink: #956400;
+  /* Night: overworld sky */
+  --color-night: #0B1030;
+  --color-night-hi: #161D4A;
 
-  /* Double Helix Skill Category Indicators */
-  --color-cat-ml: #1F6C9F;
-  --color-cat-lang: #346538;
-  --color-cat-tools: #956400;
-  --color-cat-core: #9F2F2D;
+  /* SNES-style menu window */
+  --color-win-hi: #4A6CF0;
+  --color-win: #2A46C0;
+  --color-win-lo: #121C70;
+  --color-void: #0B0E2A;
+  --color-frame: #F4F4F8;
 
+  /* HUD accents */
+  --color-gold: #F8D048;
+  --color-hp: #E84848;
+  --color-mp: #48A8F8;
+  --color-exp: #B868F8;
+  --color-heal: #58D868;
+
+  --animate-blink: blink 1s steps(1, end) infinite;
+  --animate-nudge: nudge 0.6s steps(1, end) infinite;
+  --animate-float: float 3.2s ease-in-out infinite;
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+  @keyframes nudge {
+    50% { transform: translateX(3px); }
+  }
+  @keyframes float {
+    50% { transform: translateY(-10px); }
+  }
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 5.5rem;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    scroll-padding-top: 5rem;
   }
 
   body {
-    background-color: transparent;
-    color: #111111;
+    background-color: #F3E2B8;
+    color: #2B1A10;
     font-family: var(--font-sans);
-    line-height: 1.6;
+    line-height: 1.5;
     overflow-x: hidden;
   }
 
+  .dark body {
+    background-color: #0B1030;
+    color: #F4F4F8;
+  }
+
   ::selection {
-    background-color: #E1F3FE;
-    color: #1F6C9F;
+    background-color: #F8D048;
+    color: #0B0E2A;
   }
 
   :focus-visible {
-    outline: 2px solid #111111;
-    outline-offset: 2px;
-  }
-
-  .dark :focus-visible {
-    outline-color: #FBFBFA;
+    outline: 3px solid #F8D048;
+    outline-offset: 3px;
   }
 
   @media (prefers-reduced-motion: reduce) {

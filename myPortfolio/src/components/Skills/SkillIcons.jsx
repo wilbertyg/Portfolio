@@ -36,7 +36,7 @@ export function SkillIcon({ name, className = 'size-5' }) {
     return (
         <img
             src={src}
-            alt={`${name} icon`}
+            alt=""
             className={`${className} object-contain`}
             loading="lazy"
         />
