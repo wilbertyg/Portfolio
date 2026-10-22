@@ -75,7 +75,7 @@ function Projects() {
                                             <span className="-rotate-45 font-display text-sm font-black">✓</span>
                                         </span>
                                         <span className="flex min-w-0 flex-col">
-                                            <span className={`truncate font-display text-sm font-bold tracking-wide ${active ? 'text-gold' : 'text-ink'}`}>
+                                            <span className={`font-display text-sm font-bold tracking-wide ${active ? 'text-gold' : 'text-ink'}`}>
                                                 {p.title}
                                             </span>
                                             <span className="font-pixel text-[10px] uppercase tracking-wider text-muted">{p.category}</span>
@@ -86,7 +86,7 @@ function Projects() {
                         </div>
                     </Panel>
 
-                    <Panel id="quest-panel" role="tabpanel" aria-labelledby={`quest-tab-${quest.id}`} className="overflow-hidden p-5 sm:p-7">
+                    <Panel id="quest-panel" role="tabpanel" aria-labelledby={`quest-tab-${quest.id}`} className="p-5 sm:p-7">
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={quest.id}

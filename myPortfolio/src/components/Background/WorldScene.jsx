@@ -11,23 +11,23 @@ const SECTION_IDS = ['top', 'about', 'skills', 'projects', 'certifications', 'co
 
 const WAYPOINTS = [
     { pos: [5, 5.5, 15], look: [-3.5, 3.2, 0] },
-    { pos: [-7, 3.5, 8], look: [3.5, 2.6, -1] },
+    { pos: [-7, 3.5, 8], look: [-3.5, 2.5, -3.5] },
     { pos: [-6, 1.5, 3], look: [-20, -2.5, -11] },
     { pos: [8, 2.5, -1], look: [19, -1, -16] },
-    { pos: [-2, -1.5, -15], look: [-12, -5.5, -30] },
-    { pos: [2, -4.5, -28], look: [10, -8.5, -42] },
+    { pos: [-2, -1.5, -15], look: [-19, -8, -25.5] },
+    { pos: [6, -7, -30], look: [10, -12.5, -42] },
 ]
 
 const PALETTES = {
     dark: {
         skyTop: '#04030c', skyMid: '#1a1240', skyBottom: '#47205a', fog: '#171033',
         hemiSky: '#7b6bd6', hemiGround: '#1a1030', hemi: 0.75, sun: '#a9bcff', sunI: 1.1,
-        orb: '#e9edff', stars: 1, glow: 1, lamps: 1,
+        orb: '#e9edff', fogDensity: 0.018, stars: 1, glow: 1, lamps: 1,
     },
     light: {
         skyTop: '#3d7fd0', skyMid: '#9ccaf0', skyBottom: '#f8d8a8', fog: '#c6dcef',
         hemiSky: '#d8ecff', hemiGround: '#9a8358', hemi: 1.5, sun: '#fff0cc', sunI: 2.6,
-        orb: '#fff4c2', stars: 0, glow: 0.35, lamps: 0.35,
+        orb: '#fff4c2', fogDensity: 0.011, stars: 0, glow: 0.35, lamps: 0.35,
     },
 }
 
@@ -598,6 +598,7 @@ function buildWorld(scene, lowPower) {
             skyUniforms.uMid.value.copy(p.skyMid)
             skyUniforms.uBottom.value.copy(p.skyBottom)
             scene.fog.color.copy(p.fog)
+            scene.fog.density = p.fogDensity
             hemi.color.copy(p.hemiSky)
             hemi.groundColor.copy(p.hemiGround)
             hemi.intensity = p.hemi

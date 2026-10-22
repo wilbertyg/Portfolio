@@ -79,7 +79,7 @@ function CertificateDialog({ cert, onClose }) {
                                 </h3>
                                 <p className="mt-0.5 text-sm text-muted">
                                     <span className={rarity.text}>{rarity.name}</span> · {cert.issuer}
-                                    {cert.year && ` · ${cert.year}`}
+                                    {cert.year && !cert.issuer.includes(cert.year) && ` · ${cert.year}`}
                                 </p>
                             </div>
                         </div>
@@ -162,7 +162,7 @@ function Related() {
                                                 loading="lazy"
                                                 width="400"
                                                 height="225"
-                                                className="size-full object-cover opacity-80 transition duration-300 group-hover:scale-105 group-hover:opacity-100"
+                                                className="size-full object-cover object-top opacity-80 transition duration-300 group-hover:scale-105 group-hover:opacity-100"
                                             />
                                             {/* Shine sweep on hover */}
                                             <span
@@ -180,7 +180,7 @@ function Related() {
                                             <span className="flex min-w-0 flex-1 flex-col gap-1">
                                                 <span className="font-display text-sm font-bold leading-snug tracking-wide text-ink">{cert.title}</span>
                                                 <span className="text-sm text-muted">
-                                                    {cert.issuer} · {cert.year}
+                                                    {cert.issuer.includes(cert.year) ? cert.issuer : `${cert.issuer} · ${cert.year}`}
                                                 </span>
                                             </span>
                                         </span>

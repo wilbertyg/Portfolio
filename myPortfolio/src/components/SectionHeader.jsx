@@ -12,7 +12,7 @@ function SectionHeader({ tag, title, children, aside }) {
                 <h2 className="font-display text-3xl font-bold leading-tight tracking-wide text-balance text-ink drop-shadow-[0_2px_12px_rgb(0_0_0/0.35)] sm:text-4xl md:text-5xl">
                     {title}
                 </h2>
-                {children && <p className="mt-3 max-w-[620px] leading-relaxed text-ink-soft">{children}</p>}
+                {children && <p className="mt-3 max-w-[620px] leading-relaxed text-ink-soft text-shadow-[0_1px_8px_var(--color-void)]">{children}</p>}
             </div>
             {aside}
         </div>

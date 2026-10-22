@@ -38,9 +38,9 @@ function ZoneBanner() {
                         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                         exit={{ opacity: 0, y: -10, filter: 'blur(6px)' }}
                         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                        className="flex flex-col items-center gap-2 text-center"
+                        className="flex flex-col items-center gap-2 bg-[radial-gradient(ellipse_at_center,rgb(0_0_0/0.65),transparent_70%)] px-16 py-8 text-center"
                     >
-                        <span className="font-pixel text-xs uppercase tracking-[0.4em] text-gold drop-shadow-[0_1px_4px_rgb(0_0_0/0.8)]">Area discovered</span>
+                        <span className="font-pixel text-xs uppercase tracking-[0.4em] text-[#f5c542] drop-shadow-[0_1px_4px_rgb(0_0_0/0.8)]">Area discovered</span>
                         <span className="h-px w-48 bg-linear-to-r from-transparent via-gold to-transparent" />
                         <span className="font-display text-3xl font-bold tracking-[0.12em] text-[#fff6dd] drop-shadow-[0_2px_12px_rgb(0_0_0/0.9)] sm:text-5xl">
                             {zone}
