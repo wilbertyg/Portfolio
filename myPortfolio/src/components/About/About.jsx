@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import Profile from '../../assets/profile.jpg'
 import CV from '../../assets/CV_Wilbert Yang.pdf'
@@ -26,50 +25,6 @@ const EQUIPMENT = [
     ['Armor', 'Scikit-Learn'],
     ['Relic', 'Jupyter Notebooks'],
 ]
-
-// Downsamples and posterizes the photo into a 48×64 sprite; click to toggle the real photo.
-function PixelPortrait() {
-    const ref = useRef(null)
-    const [hd, setHd] = useState(false)
-
-    useEffect(() => {
-        const img = new Image()
-        img.onload = () => {
-            const c = ref.current
-            if (!c) return
-            const w = (c.width = 48)
-            const h = (c.height = 64)
-            const g = c.getContext('2d', { willReadFrequently: true })
-            const sh = Math.min(img.height, (img.width * h) / w)
-            const sw = (sh * w) / h
-            g.drawImage(img, (img.width - sw) / 2, (img.height - sh) * 0.2, sw, sh, 0, 0, w, h)
-            const d = g.getImageData(0, 0, w, h)
-            for (let i = 0; i < d.data.length; i++) if (i % 4 !== 3) d.data[i] = Math.round(d.data[i] / 42) * 42
-            g.putImageData(d, 0, 0)
-        }
-        img.src = Profile
-    }, [])
-
-    return (
-        <button
-            type="button"
-            onClick={() => setHd((v) => !v)}
-            aria-pressed={hd}
-            aria-label="Show full-resolution photo of Wilbert Yang"
-            className="group relative block aspect-[3/4] w-full overflow-hidden rounded-sm border-4 border-void bg-void"
-        >
-            <img
-                src={Profile}
-                alt=""
-                width="300"
-                height="400"
-                className={`absolute inset-0 size-full object-cover object-[center_20%] transition-opacity duration-300 ${hd ? 'opacity-100' : 'opacity-0'}`}
-            />
-            <canvas ref={ref} className={`absolute inset-0 size-full [image-rendering:pixelated] transition-opacity duration-300 ${hd ? 'opacity-0' : 'opacity-100'}`} />
-            <span className={`absolute right-2 bottom-2 ${label} rounded-sm bg-void/80 px-2 py-1 text-[8px] text-gold`}>{hd ? '16-bit' : 'HD'} ▸</span>
-        </button>
-    )
-}
 
 function Bar({ name, value, color, text }) {
     return (
@@ -104,7 +59,13 @@ function About() {
 
                 <div className="grid gap-6 lg:grid-cols-[300px_1fr] lg:gap-8">
                     <motion.div {...rise(0)} className={`${win} flex flex-col gap-4 self-start p-4`}>
-                        <PixelPortrait />
+                        <img
+                            src={Profile}
+                            alt="Wilbert Yang"
+                            width="300"
+                            height="400"
+                            className="aspect-[3/4] w-full rounded-sm border-4 border-void bg-void object-cover object-[center_20%]"
+                        />
                         <div>
                             <p className="font-display text-sm leading-relaxed text-gold">Wilbert Yang</p>
                             <p className="text-lg text-white/80">Data Sage · AI / Machine Learning</p>
